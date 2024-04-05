@@ -1,0 +1,66 @@
+version: "3.8"
+services:
+  queue:
+    image: apache/activemq-classic
+    container_name: queue
+    environment:
+      ACTIVEMQ_OPTS: "-Djetty.host=0.0.0.0 -Djava.util.logging.config.file=logging.properties -Djava.security.auth.login.config=/opt/apache-activemq/conf/login.config"
+    ports:
+      - "61616:61616"
+      - "61613:61613"
+      - "61614:61614"
+      - "8161:8161"
+    healthcheck:
+      test: /opt/apache-activemq/bin/activemq query --objname type=Broker,brokerName=*,service=Health | grep Good
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+      - ./scripts/:/docker-entrypoint-initdb.d/
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=videos
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  worker:
+    build: ./worker
+    container_name: worker
+    working_dir: /backend/
+    volumes:
+      - ./wait:/wait
+    depends_on:
+      - queue
+      - postgres
+    environment:
+      WAIT_HOSTS: queue:61613
+      WAIT_TIMEOUT: 200
+      PYTHONUNBUFFERED: 1
+      PORT: 6001
+      HOST_QUEUE: 'queue'
+      PORT_QUEUE: 61613
+      QUEUE_NAME_ONE: 'one'
+    ports:
+      - "6001:6001"
+    command: bash -c "chmod +x /wait && /wait && echo 'Starting worker videos' && python process.py"
+    
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    container_name: cloud-pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=pgadmin4
+    ports:
+      - '5050:80'
+    depends_on:
+      - postgres
