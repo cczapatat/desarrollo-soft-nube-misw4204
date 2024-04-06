@@ -1,49 +1,42 @@
-from flask import Flask
-from flask_restful import Api
-import stomp
-import json
-import threading
-import time
-import os
-
-app = Flask(__name__)
-
-# ActiveMQ configuration
-host = os.environ.get('HOST_QUEUE', 'localhost')
-port = os.environ.get('PORT_QUEUE', 61616)
-hosts = [(host, port)]
-queue_name_one = os.environ.get('QUEUE_NAME_ONE', 'one')
-user_queue = os.environ.get('HOST_QUEUE_USER', 'admin')
-password_queue = os.environ.get('HOST_QUEUE_PWD', 'admin')
-api = Api(app)
+from typing import Union
+from worker import run_worker
+from models.task import Task
+from models.declarative_base import session
+from utils.video_util import process_video
 
 
-# ActiveMQ Listener
-class WorkerListener(stomp.ConnectionListener):
-    def on_error(self, frame):
-        print('received an error "%s"' % frame.body)
+def __get_task__(task_id: int) -> Union[Task, None]:
+    try:
+        task = session.query(Task).filter(Task.id == task_id).one_or_none()
 
-    def on_message(self, frame):
-        with app.app_context():
-            print('[on_message] Processing new messages: {}'.format(frame.body))
-            message_translated = json.loads(frame.body.replace("'", '"'))
-            print(message_translated)
+        return task
+    except Exception as ex:
+        print('[Process][get_task] error {}'.format(str(ex)))
+        return None
 
 
-def active_mq_listener():
-    conn = stomp.Connection(host_and_ports=hosts)
-    conn.set_listener('', WorkerListener())
-    # conn.start()
-    conn.connect(user_queue, password_queue, wait=True)
-    conn.subscribe(destination=queue_name_one, id='1', ack='auto')
-    print(f"Subscribed to ActiveMQ queue: {queue_name_one}")
+def process(input):
+    print('[Process] New event: {}'.format(str(input)))
+    task_id = input["id"]
 
-    while True:
-        time.sleep(1)  # Keep the thread alive
+    if task_id is None or type(task_id) is not int:
+        print('[Process] event is incorrect, input: {}'.format(str(input)))
+        return
+
+    task = __get_task__(task_id)
+
+    if task is None:
+        print('[Process] task {} is not exists'.format(str(task_id)))
+        return
+
+    video = process_video(task.path_origin)
+
+    # TODO: Logica de actualizar la BD de acuerdo al resultado
+    if type(video) is dict:
+        print('[Process] mal procesamiento')
+    else:
+        print('[Process] buen procesamiento')
 
 
 if __name__ == '__main__':
-    active_mq_thread = threading.Thread(target=active_mq_listener, daemon=True)
-    active_mq_thread.start()
-
-    app.run(host='0.0.0.0', port=os.environ.get('PORT', 5000), debug=False)
+    run_worker(process)
