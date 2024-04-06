@@ -1,8 +1,9 @@
 version: "3.8"
+
 services:
   queue:
     image: apache/activemq-classic
-    container_name: queue
+    container_name: queue_nube
     environment:
       ACTIVEMQ_OPTS: "-Djetty.host=0.0.0.0 -Djava.util.logging.config.file=logging.properties -Djava.security.auth.login.config=/opt/apache-activemq/conf/login.config"
     ports:
@@ -17,50 +18,51 @@ services:
       retries: 5
   postgres:
     image: postgres:14-alpine
+    container_name: postgres_nube
+    volumes:
+      - ${PWD}/postgres-data:/var/lib/postgresql/data
+      - ./scripts/:/docker-entrypoint-initdb.d/
     ports:
       - 5432:5432
-    volumes:
-      - ~/apps/postgres:/var/lib/postgresql/data
-      - ./scripts/:/docker-entrypoint-initdb.d/
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_DB=videos
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER" ]
       interval: 5s
       timeout: 5s
       retries: 5
 
   worker:
     build: ./worker
-    container_name: worker
+    container_name: worker_nube
     working_dir: /backend/
     volumes:
       - ./wait:/wait
+      - shared-volume:/videos/ins
+      - shared-volume:/videos/outs
     depends_on:
       - queue
       - postgres
     environment:
-      WAIT_HOSTS: queue:61613
+      WAIT_HOSTS: queue:61613,postgres:5432
       WAIT_TIMEOUT: 200
       PYTHONUNBUFFERED: 1
-      PORT: 6001
       HOST_QUEUE: 'queue'
       PORT_QUEUE: 61613
-      QUEUE_NAME_ONE: 'one'
-    ports:
-      - "6001:6001"
-    command: bash -c "chmod +x /wait && /wait && echo 'Starting worker videos' && python process.py"
-    
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: always
-    container_name: cloud-pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
-      - PGADMIN_DEFAULT_PASSWORD=pgadmin4
-    ports:
-      - '5050:80'
-    depends_on:
-      - postgres
+      NAME_QUEUE: 'videos'
+      USER_QUEUE: 'admin'
+      PWD_QUEUE: 'admin'
+      OUT_EXT_VIDEOS: 'mp4'
+      MAX_DIRECTION_VIDEOS: 20
+      OUT_FILE_VIDEOS: videos/outs
+      HOST_PG: 'postgres'
+      PORT_PG: 5432
+      USER_PG: 'postgres'
+      PWD_PG: 'postgres'
+      DB_NAME_PG: 'videos'
+    command: bash -c "chmod +x /wait && /wait && echo 'Starting worker videos' && python init_bd.py && python process.py"
+
+volumes:
+  shared-volume:
