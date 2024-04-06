@@ -7,7 +7,17 @@ from moviepy.video.fx.all import crop
 # Videos Results configuration
 video_ext = os.environ.get('OUT_EXT_VIDEOS', 'mp4')
 video_max_duration = int(os.environ.get('MAX_DIRECTION_VIDEOS', 20))
-out_result_file = os.environ.get('OUT_FILE_VIDEOS', 'videos/outs')
+
+dirname = os.path.dirname(__file__)
+dir_frames = '{}/../frames'.format(dirname)
+
+out_result_path = os.environ.get('OUT_FILE_VIDEOS', '')
+is_out_result_path_filled = len(out_result_path) > 0
+
+if is_out_result_path_filled:
+    out_result_file = out_result_path
+else:
+    out_result_file = '{}/../../videos/outs'.format(dirname)
 
 faker = Faker()
 
@@ -59,10 +69,14 @@ def save_new_video(new_video):
 
 def add_frames(new_video):
     try:
-        start_frame = (ImageClip("frames/start_frame.jpg").set_start(0).set_duration(1)
-                       .set_pos(("center", "center")).resize(height=new_video.h, width=new_video.w))
-        end_frame = (ImageClip("frames/end_frame.jpeg").set_start(new_video.duration + 1).set_duration(1)
-                     .set_pos(("center", "center")).resize(height=new_video.h, width=new_video.w))
+        start_frame = (ImageClip("{}/start_frame.jpg".format(dir_frames))
+                       .set_start(0).set_duration(1)
+                       .set_pos(("center", "center"))
+                       .resize(height=new_video.h, width=new_video.w))
+        end_frame = (ImageClip("{}/end_frame.jpeg".format(dir_frames))
+                     .set_start(new_video.duration + 1).set_duration(1)
+                     .set_pos(("center", "center"))
+                     .resize(height=new_video.h, width=new_video.w))
         video_frame = (new_video.set_start(1).set_pos(("center", "center")))
         video_frames = CompositeVideoClip([start_frame, video_frame, end_frame])
 

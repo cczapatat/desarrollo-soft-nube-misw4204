@@ -8,8 +8,13 @@
 **/__pycache__
 **/**/__pycache__
 
-worker/videos/ins/
-worker/videos/outs/
+videos/ins/
+videos/outs/
 
-!worker/videos/ins/init
-!worker/videos/outs/init
+!videos/ins/example.mp4
+!videos/outs/init.txt
+
+postgres-data
+scripts
+
+**.mp3

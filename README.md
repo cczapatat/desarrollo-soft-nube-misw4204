@@ -16,7 +16,7 @@
 ### Delete old containers
 
 ```shell
-docker rm 
+docker rm queue_nube postgres_nube worker_nube
 ```
 
 ### Delete old images

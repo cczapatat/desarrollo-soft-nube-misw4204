@@ -31,10 +31,13 @@ def __update_task__(task: Task, status: Status, path_processed: Union[str, None]
 
 def __process_and_update__(task: Task) -> Union[Task, None]:
     result_process_video = process_video(task.path_origin)
-    result_is_correct = True if result_process_video['path_processed'] is not None else False
 
-    status = Status.ERROR if not result_is_correct else Status.PROCESSED
-    path_processed = None if not result_is_correct else result_process_video['path_processed']
+    if 'path_processed' in result_process_video:
+        status = Status.PROCESSED
+        path_processed = result_process_video['path_processed']
+    else:
+        status = Status.ERROR
+        path_processed = None
 
     task_updated = __update_task__(task, status, path_processed)
     print('[Process][__process_and_update__] result: {}'.format(str({
