@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 from faker import Faker
-from moviepy.editor import VideoFileClip
+from moviepy.editor import VideoFileClip, ImageClip, CompositeVideoClip
 from moviepy.video.fx.resize import resize
 
 # Videos Results configuration
@@ -28,12 +28,17 @@ def process_video(path):
 
     new_video = resize_video(video)
 
-    if type(video) is str:
+    if type(new_video) is str:
         return {"end": False, "status": "error", "message": new_video}
 
-    response_save = save_new_video(new_video)
+    video_frames = add_frames(new_video)
 
-    if type(video) is str:
+    if type(video_frames) is str:
+        return {"end": False, "status": "error", "message": video_frames}
+
+    response_save = save_new_video(video_frames)
+
+    if type(response_save) is str:
         return {"end": False, "status": "error", "message": response_save}
 
     return {"path_processed": response_save["path_processed"]}
@@ -49,6 +54,20 @@ def save_new_video(new_video):
         return {"path_processed": path}
     except Exception as ex:
         print('[VideoUtil][save_new_video] error {}'.format(str(ex)))
+        return str(ex)
+
+
+def add_frames(new_video):
+    try:
+        start_frame = (ImageClip("frames/start_frame.jpg").set_start(0).set_duration(1)
+                       .set_pos(("center", "center")))
+        end_frame = (ImageClip("frames/end_frame.jpeg").set_start(new_video.duration).set_duration(1)
+                       .set_pos(("center", "center")))
+        video_frames = CompositeVideoClip([new_video, start_frame, end_frame])
+
+        return video_frames
+    except Exception as ex:
+        print('[VideoUtil][resize_video] error {}'.format(str(ex)))
         return str(ex)
 
 

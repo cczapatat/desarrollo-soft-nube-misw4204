@@ -43,6 +43,7 @@ class ConnectionListener(stomp.ConnectionListener):
         except Exception as ex:
             print('[Queue] catch error: {}'.format(str(ex)))
 
+
 def __start_worker(callback):
     print('[Worker] Staring to "{}"'.format(name_queue))
     conn = stomp.Connection(host_and_ports=hosts)
