@@ -4,3 +4,4 @@ ez_setup==0.9
 moviepy==1.0.3
 sqlalchemy==2.0.29
 psycopg2==2.9.9
+Faker==24.4.0

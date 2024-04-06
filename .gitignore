@@ -7,3 +7,9 @@
 **/**.db
 **/__pycache__
 **/**/__pycache__
+
+worker/videos/ins/
+worker/videos/outs/
+
+!worker/videos/ins/init
+!worker/videos/outs/init
