@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from faker import Faker
 from moviepy.editor import VideoFileClip, ImageClip, CompositeVideoClip
-from moviepy.video.fx.resize import resize
+from moviepy.video.fx.all import crop
 
 # Videos Results configuration
 video_ext = os.environ.get('OUT_EXT_VIDEOS', 'mp4')
@@ -60,10 +60,11 @@ def save_new_video(new_video):
 def add_frames(new_video):
     try:
         start_frame = (ImageClip("frames/start_frame.jpg").set_start(0).set_duration(1)
-                       .set_pos(("center", "center")))
-        end_frame = (ImageClip("frames/end_frame.jpeg").set_start(new_video.duration).set_duration(1)
-                       .set_pos(("center", "center")))
-        video_frames = CompositeVideoClip([new_video, start_frame, end_frame])
+                       .set_pos(("center", "center")).resize(height=new_video.h, width=new_video.w))
+        end_frame = (ImageClip("frames/end_frame.jpeg").set_start(new_video.duration + 1).set_duration(1)
+                     .set_pos(("center", "center")).resize(height=new_video.h, width=new_video.w))
+        video_frame = (new_video.set_start(1).set_pos(("center", "center")))
+        video_frames = CompositeVideoClip([start_frame, video_frame, end_frame])
 
         return video_frames
     except Exception as ex:
@@ -73,8 +74,11 @@ def add_frames(new_video):
 
 def resize_video(video):
     try:
-        new_video = resize(video, width=1980, height=1080)
-
+        (w, h) = video.size
+        crop_width = h * (16 / 9)
+        x1, x2 = (w - crop_width) // 2, (w + crop_width) // 2
+        y1, y2 = 0, h
+        new_video = crop(video, x1=x1, y1=y1, x2=x2, y2=y2)
         width_new = new_video.w
         height_new = new_video.h
         print('[VideoUtil][resize_video] New Video size: W: {}, H: {}'.format(str(width_new), str(height_new)))
