@@ -17,7 +17,7 @@ class ViewLogin(Resource):
             return {'message': 'Incorrect Password'}, 400
         
         try:
-            access_token = create_access_token(identity = request.json['username'], expires_delta = timedelta(days = 1))
+            access_token = create_access_token(identity = user.id, expires_delta = timedelta(days = 1))
             return {
                 'message':'Sesion started',
                 'access_token':access_token

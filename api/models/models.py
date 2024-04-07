@@ -18,7 +18,7 @@ class Task(db.Model):
     __tablename__ = 'tasks'
     
     id = Column(Integer(), primary_key=True)
-    user_id = Column(Integer(), nullable=False)
+    user_id = Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     file_name = Column(String(500), nullable=False)
     path_origin = Column(Text, nullable=False)
     path_processed = Column(Text, nullable=True)

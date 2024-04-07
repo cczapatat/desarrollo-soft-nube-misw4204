@@ -29,7 +29,9 @@ class ViewSignUp(Resource):
             db.session.add(new_user)
             db.session.commit()
 
-            access_token = create_access_token(identity = request.json['username'], expires_delta = timedelta(days = 1))
+            user = User.query.filter(User.email==request.json['email']).first()
+
+            access_token = create_access_token(identity = user.id, expires_delta = timedelta(days = 1))
             
             return {
                 'message':'user created',
