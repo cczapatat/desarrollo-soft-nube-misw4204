@@ -1,0 +1,7 @@
+
+FROM python:3.9.6
+RUN mkdir /backend
+WORKDIR /backend
+ADD requirements.txt /backend/
+RUN pip install -r requirements.txt
+ADD . /backend/

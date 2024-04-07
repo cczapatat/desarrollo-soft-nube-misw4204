@@ -64,5 +64,34 @@ services:
       DB_NAME_PG: 'videos'
     command: bash -c "chmod +x /wait && /wait && echo 'Starting worker videos' && python init_bd.py && python process.py"
 
+  api:
+    build: ./api
+    container_name: api
+    working_dir: /backend/
+    volumes:
+      - ./wait:/wait
+      - shared-volume:/videos/ins
+      - shared-volume:/videos/outs
+    depends_on:
+      - queue
+      - worker
+      - postgres
+    environment:
+      WAIT_HOSTS: queue:61613,postgres:5432
+      WAIT_TIMEOUT: 200
+      PYTHONUNBUFFERED: 1
+      PORT: 6000
+      HOST_QUEUE: 'queue'
+      PORT_QUEUE: 61613
+      QUEUE_NAME_ONE: 'one'
+      HOST_PG: 'postgres'
+      PORT_PG: 5432
+      USER_PG: 'postgres'
+      PWD_PG: 'postgres'
+      DB_NAME_PG: 'videos'
+    ports:
+      - "6000:6000"
+    command: bash -c "chmod +x /wait && /wait && echo 'Starting Api' && python api.py"
+
 volumes:
   shared-volume:
