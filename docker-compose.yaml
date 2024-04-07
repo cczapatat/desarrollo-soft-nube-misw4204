@@ -40,8 +40,8 @@ services:
     working_dir: /backend/
     volumes:
       - ./wait:/wait
-      - shared-volume:/videos/ins
-      - shared-volume:/videos/outs
+      - shared-volume:/backend/videos/ins
+      - shared-volume:/backend/videos/outs
     depends_on:
       - queue
       - postgres
@@ -56,7 +56,7 @@ services:
       PWD_QUEUE: 'admin'
       OUT_EXT_VIDEOS: 'mp4'
       MAX_DIRECTION_VIDEOS: 20
-      OUT_FILE_VIDEOS: videos/outs
+      OUT_FILE_VIDEOS: /backend/videos/outs
       HOST_PG: 'postgres'
       PORT_PG: 5432
       USER_PG: 'postgres'
@@ -70,8 +70,8 @@ services:
     working_dir: /backend/
     volumes:
       - ./wait:/wait
-      - shared-volume:/videos/ins
-      - shared-volume:/videos/outs
+      - shared-volume:/backend/videos/ins
+      - shared-volume:/backend/videos/outs
     depends_on:
       - queue
       - postgres
@@ -86,7 +86,7 @@ services:
       USER_QUEUE: 'admin'
       PWD_QUEUE: 'admin'
       IN_EXT_VIDEOS: 'mp4'
-      IN_FILE_VIDEOS: videos/ins
+      IN_FILE_VIDEOS: /backend/videos/ins
       HOST_PG: 'postgres'
       PORT_PG: 5432
       USER_PG: 'postgres'
