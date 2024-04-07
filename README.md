@@ -16,13 +16,19 @@
 ### Delete old containers
 
 ```shell
-docker rm queue_nube postgres_nube worker_nube
+docker rm queue_nube postgres_nube worker_nube api_nube
 ```
 
 ### Delete old images
 
 ```shell
-docker rmi 
+docker rmi desarrollo-soft-nube-misw4204-worker desarrollo-soft-nube-misw4204-api
+```
+
+### Delete old volumes
+
+```shell
+docker volume rm desarrollo-soft-nube-misw4204_shared-volume
 ```
 
 ### Run All Apps

@@ -23,7 +23,6 @@ else:
 
 faker = Faker()
 
-
 # ActiveMQ configuration
 host = os.environ.get('HOST_QUEUE', 'localhost')
 port = os.environ.get('PORT_QUEUE', 61613)
@@ -97,30 +96,31 @@ class ViewTasks(Resource):
                 'id': user_id,
                 'result': {'error': 'no file part', 'details': {}, 'id': 'user_id'},
             }, 400
-        print('User ID:', user_id)
-        print('Filename:', file.filename)
+        filename_origin = file.filename
+        print('[NewTask] userId: {}, fileOriginName: {}'.format(user_id, filename_origin))
 
         try:
             date = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
             uuid = faker.unique.iban()
             path = '{}/{}_{}.{}'.format(in_result_file, date, uuid, video_ext)
 
+            print('[NewTask] userId: {}, fileOriginName: {}, to path: {}'.format(user_id, filename_origin, path))
+
             # save video to folder
             file.save(path)
+            print('[NewTask] saved userId: {}, fileOriginName: {}'.format(user_id, filename_origin))
 
-            #save task
-            task = Task(user_id=int(user_id), file_name=file.filename, path_origin=path, status=Status.UPLOADED)
+            # save task
+            task = Task(user_id=int(user_id), file_name=filename_origin, path_origin=path, status=Status.UPLOADED)
             db.session.add(task)
             db.session.commit()
 
-            #Send task to queue
-            stomp_send({
-                'id': task.id
-            })
+            # Send task to queue
+            stomp_send({'id': task.id})
 
             return {
                 'id': task.id,
-                'result': {'success': 'file was received succesfully', 'details': {}, 'id': user_id}
+                'result': {'success': 'file was received successfully', 'details': {}, 'id': user_id}
             }, 200
 
         except Exception as ex:
@@ -129,4 +129,3 @@ class ViewTasks(Resource):
                 'id': None,
                 'result': {'error': str(ex), 'details': {}, 'status': 'Error'},
             }, 400
-

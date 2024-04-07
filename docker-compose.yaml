@@ -21,7 +21,7 @@ services:
     container_name: postgres_nube
     volumes:
       - ${PWD}/postgres-data:/var/lib/postgresql/data
-      - ./scripts/:/docker-entrypoint-initdb.d/
+      - ${PWD}/scripts/:/docker-entrypoint-initdb.d/
     ports:
       - 5432:5432
     environment:
@@ -66,7 +66,7 @@ services:
 
   api:
     build: ./api
-    container_name: api
+    container_name: api_nube
     working_dir: /backend/
     volumes:
       - ./wait:/wait
@@ -74,7 +74,6 @@ services:
       - shared-volume:/videos/outs
     depends_on:
       - queue
-      - worker
       - postgres
     environment:
       WAIT_HOSTS: queue:61613,postgres:5432
@@ -83,7 +82,11 @@ services:
       PORT: 6000
       HOST_QUEUE: 'queue'
       PORT_QUEUE: 61613
-      QUEUE_NAME_ONE: 'one'
+      NAME_QUEUE: 'videos'
+      USER_QUEUE: 'admin'
+      PWD_QUEUE: 'admin'
+      IN_EXT_VIDEOS: 'mp4'
+      IN_FILE_VIDEOS: videos/ins
       HOST_PG: 'postgres'
       PORT_PG: 5432
       USER_PG: 'postgres'

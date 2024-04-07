@@ -9,8 +9,10 @@ from views.view_tasks import ViewTasks
 host = os.environ.get('HOST_PG', 'localhost')
 port = os.environ.get('PORT_PG', 5432)
 user = os.environ.get('USER_PG', 'postgres')
-password = os.environ.get('PWD_PG', 'gomito21')
+password = os.environ.get('PWD_PG', 'postgres')
 database_name = os.environ.get('DB_NAME_PG', 'videos')
+
+
 def create_flask_app():
     _app = Flask(__name__)
     _app.config['PROPAGATE_EXCEPTIONS'] = True
