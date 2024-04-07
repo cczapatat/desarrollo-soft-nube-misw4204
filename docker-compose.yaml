@@ -80,6 +80,7 @@ services:
       WAIT_TIMEOUT: 200
       PYTHONUNBUFFERED: 1
       PORT: 6000
+      URL_HOST_BASE: 'http://127.0.0.1:6000'
       HOST_QUEUE: 'queue'
       PORT_QUEUE: 61613
       NAME_QUEUE: 'videos'

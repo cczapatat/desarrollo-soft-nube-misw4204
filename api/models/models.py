@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
 class Status(enum.Enum):
     UPLOADED = 'uploaded'
     PROCESSED = 'processed'

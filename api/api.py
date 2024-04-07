@@ -4,7 +4,9 @@ from flask_cors import CORS
 from flask_restful import Api
 
 from models import db
+from views.view_task import ViewTask
 from views.view_tasks import ViewTasks
+from views.view_video import ViewVideo
 
 host = os.environ.get('HOST_PG', 'localhost')
 port = os.environ.get('PORT_PG', 5432)
@@ -30,6 +32,8 @@ def create_flask_app():
 def add_urls(_app):
     api = Api(_app)
     api.add_resource(ViewTasks, '/api/tasks')
+    api.add_resource(ViewTask, '/api/tasks/<int:id_task>')
+    api.add_resource(ViewVideo, '/api/videos')
 
 
 app = create_flask_app()
