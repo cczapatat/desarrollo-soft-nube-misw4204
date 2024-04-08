@@ -2,9 +2,9 @@ import os
 from datetime import datetime
 from faker import Faker
 import stomp
-from models.models import Task, Status
+from models.models import Task, Status, User
 from models.models import db
-
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask import request
 from flask_restful import Resource
 
@@ -71,16 +71,17 @@ class ViewTasks(Resource):
         stomp_connect(conn)
 
     @staticmethod
+    @jwt_required()
     def post():
-        input_form = request.form
         print('[Http] Starting request')
+        
         # Check if the request is associated to a user
-        if input_form.get('id', None) is None:
-            return {
-                'id': None,
-                'result': {'error': 'data incomplete', 'details': {}, 'id': 'invalid'},
-            }, 400
-        user_id = input_form.get('id')
+        user_id = get_jwt_identity()
+        user = User.query.get(user_id)
+
+        if user is None:
+            return {'message':'User not found'}, 400
+
         # Check if the request contains a file
         if 'file' not in request.files:
             return {
