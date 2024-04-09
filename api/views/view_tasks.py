@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 from faker import Faker
 import stomp
-from models.models import Task, Status, User
+from models.models import Task, Status, User, TaskSchema
 from models.models import db
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask import request
@@ -22,6 +22,7 @@ else:
     in_result_file = '{}/../../videos/ins'.format(dirname)
 
 faker = Faker()
+task_schema = TaskSchema()
 
 # ActiveMQ configuration
 host = os.environ.get('HOST_QUEUE', 'localhost')
@@ -67,6 +68,8 @@ conn.set_listener('list', ConnectionListener(conn))
 
 
 class ViewTasks(Resource):
+
+
     def __init__(self):
         stomp_connect(conn)
 
@@ -74,13 +77,13 @@ class ViewTasks(Resource):
     @jwt_required()
     def post():
         print('[Http] Starting request')
-        
+
         # Check if the request is associated to a user
         user_id = get_jwt_identity()
         user = User.query.get(user_id)
 
         if user is None:
-            return {'message':'User not found'}, 400
+            return {'message': 'User not found'}, 400
 
         # Check if the request contains a file
         if 'file' not in request.files:
@@ -130,3 +133,40 @@ class ViewTasks(Resource):
                 'id': None,
                 'result': {'error': str(ex), 'details': {}, 'status': 'Error'},
             }, 400
+
+
+    @jwt_required()
+    def get(self):
+        user_id = get_jwt_identity()
+
+        tasks = []
+
+        # if max parameter is passed, then limit the number of tasks to return
+        max_tasks = request.args.get('max', None)
+        if max_tasks is not None:
+            try:
+                max_tasks = int(max_tasks)
+            except:
+                max_tasks = 100
+
+            if max_tasks > 0:
+                tasks = Task.query.filter(Task.user_id == user_id).limit(max_tasks).all()
+
+        # if order parameter is passed, then order the tasks, by asc or desc
+        order_by = request.args.get('order', None)
+
+        if order_by is not None:
+            if order_by == '0':
+                #order by desc if filter equals to 0
+                tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.id.desc()).all()
+            elif order_by == '1':
+                #order by asc if filter equals to 1
+                tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.id.asc()).all()
+
+        if max_tasks is None and order_by is None:
+            tasks = Task.query.filter(Task.user_id == user_id).all()
+
+        data_response = task_schema.dump(tasks, many=True)
+
+        #return tasks as dictionary in json
+        return data_response, 200
