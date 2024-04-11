@@ -35,8 +35,11 @@ cliente_queue = 'api'
 
 
 def stomp_connect(_conn):
-    _conn.connect(user_queue, password_queue, wait=True, headers={'client-id': cliente_queue})
-    print('[Queue] New Connection')
+    if not _conn.is_connected():
+        _conn.connect(user_queue, password_queue, wait=True, headers={'client-id': cliente_queue})
+        print('[Queue] New Connection')
+    else:
+        print('[Queue] Ready connection')
 
 
 def stomp_send(body):

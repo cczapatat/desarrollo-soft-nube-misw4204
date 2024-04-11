@@ -1,6 +1,6 @@
-# MISW-4204-Proyecto-MISW4204-202402-
+# MISW-4204-Proyecto-MISW4204-202402-Grupo10
 
-## # MISW-4204-Proyecto-MISW4204-202402-GrupoXX
+## # MISW-4204-Proyecto-MISW4204-202402-Grupo10
 
 ## Members
 

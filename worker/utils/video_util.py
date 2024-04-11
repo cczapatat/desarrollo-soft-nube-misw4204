@@ -59,7 +59,10 @@ def save_new_video(new_video):
         date = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
         uuid = faker.unique.iban()
         path = '{}/{}_{}.{}'.format(out_result_file, date, uuid, video_ext)
-        new_video.write_videofile(path)
+        print('[VideoUtil][save_new_video] Start new video, {}'.format(str(datetime.now())))
+        new_video.write_videofile(path, logger=None, fps=25)
+        new_video.close()
+        print('[VideoUtil][save_new_video] Finished new video, {}'.format(str(datetime.now())))
 
         return {"path_processed": path}
     except Exception as ex:
@@ -77,12 +80,13 @@ def add_frames(new_video):
                      .set_start(new_video.duration + 1).set_duration(1)
                      .set_pos(("center", "center"))
                      .resize(height=new_video.h, width=new_video.w))
-        video_frame = (new_video.set_start(1).set_pos(("center", "center")))
-        video_frames = CompositeVideoClip([start_frame, video_frame, end_frame])
+        new_video = (new_video.set_start(1).set_pos(("center", "center")))
+        new_video = CompositeVideoClip([start_frame, new_video, end_frame])
+        print('[VideoUtil][add_frames] New Video')
 
-        return video_frames
+        return new_video
     except Exception as ex:
-        print('[VideoUtil][resize_video] error {}'.format(str(ex)))
+        print('[VideoUtil][add_frames] error {}'.format(str(ex)))
         return str(ex)
 
 
@@ -92,12 +96,12 @@ def resize_video(video):
         crop_width = h * (16 / 9)
         x1, x2 = (w - crop_width) // 2, (w + crop_width) // 2
         y1, y2 = 0, h
-        new_video = crop(video, x1=x1, y1=y1, x2=x2, y2=y2)
-        width_new = new_video.w
-        height_new = new_video.h
+        video = crop(video, x1=x1, y1=y1, x2=x2, y2=y2)
+        width_new = video.w
+        height_new = video.h
         print('[VideoUtil][resize_video] New Video size: W: {}, H: {}'.format(str(width_new), str(height_new)))
 
-        return new_video
+        return video
     except Exception as ex:
         print('[VideoUtil][resize_video] error {}'.format(str(ex)))
         return str(ex)
