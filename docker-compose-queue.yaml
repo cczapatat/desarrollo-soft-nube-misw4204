@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  queue:
+    image: apache/activemq-classic
+    container_name: queue_nube
+    environment:
+      ACTIVEMQ_OPTS: "-Djetty.host=0.0.0.0 -Djava.util.logging.config.file=logging.properties -Djava.security.auth.login.config=/opt/apache-activemq/conf/login.config"
+    ports:
+      - "61616:61616"
+      - "61613:61613"
+      - "61614:61614"
+      - "8161:8161"
+    healthcheck:
+      test: /opt/apache-activemq/bin/activemq query --objname type=Broker,brokerName=*,service=Health | grep Good
+      interval: 10s
+      timeout: 5s
+      retries: 5

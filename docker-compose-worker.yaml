@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  worker:
+    build: ./worker
+    container_name: worker_nube
+    working_dir: /backend/
+    environment:
+      - PYTHONUNBUFFERED=1
+      - HOST_QUEUE=${HOST_QUEUE}
+      - PORT_QUEUE=61613
+      - NAME_QUEUE=videos
+      - USER_QUEUE=${USER_QUEUE}
+      - PWD_QUEUE=${PWD_QUEUE}
+      - OUT_EXT_VIDEOS=mp4
+      - MAX_DIRECTION_VIDEOS=20
+      - OUT_FILE_VIDEOS=/backend/videos/outs
+      - HOST_PG=${HOST_PG}
+      - PORT_PG=5432
+      - USER_PG=${USER_PG}
+      - PWD_PG=${PWD_PG}
+      - DB_NAME_PG=videos
+    command: bash -c "chmod +x /wait && /wait && echo Starting worker videos && python init_bd.py && python process.py"
