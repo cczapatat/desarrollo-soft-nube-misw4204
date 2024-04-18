@@ -17,7 +17,7 @@ services:
       - PWD_QUEUE=${PWD_QUEUE}
       - OUT_EXT_VIDEOS=mp4
       - MAX_DIRECTION_VIDEOS=20
-      - OUT_FILE_VIDEOS=/home/ubuntu/videos/outs
+      - OUT_FILE_VIDEOS=/videos/outs
       - HOST_PG=${HOST_PG}
       - PORT_PG=5432
       - USER_PG=${USER_PG}
