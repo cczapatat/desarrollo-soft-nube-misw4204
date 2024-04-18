@@ -5,8 +5,8 @@ services:
     build: ./worker
     container_name: worker_nube
     volumes:
-      - ${PWD}/var/videos/outs:/var/videos/outs
-      - ${PWD}/var/videos/ins:/var/videos/ins
+      - ${PWD}/home/ubuntu/videos/outs:/videos/outs
+      - ${PWD}/home/ubuntu/videos/ins:/videos/ins
     working_dir: /backend/
     environment:
       - PYTHONUNBUFFERED=1
@@ -17,7 +17,7 @@ services:
       - PWD_QUEUE=${PWD_QUEUE}
       - OUT_EXT_VIDEOS=mp4
       - MAX_DIRECTION_VIDEOS=20
-      - OUT_FILE_VIDEOS=/var/videos/outs
+      - OUT_FILE_VIDEOS=/home/ubuntu/videos/outs
       - HOST_PG=${HOST_PG}
       - PORT_PG=5432
       - USER_PG=${USER_PG}

@@ -5,8 +5,8 @@ services:
     build: ./api
     container_name: api_nube
     volumes:
-      - ${PWD}/var/videos/outs:/var/videos/outs
-      - ${PWD}/var/videos/ins:/var/videos/ins
+      - ${PWD}/home/ubuntu/videos/outs:/videos/outs
+      - ${PWD}/home/ubuntu/videos/ins:/videos/ins
     working_dir: /backend/
     environment:
       - PYTHONUNBUFFERED=1
@@ -18,7 +18,7 @@ services:
       - USER_QUEUE=${USER_QUEUE}
       - PWD_QUEUE=${PWD_QUEUE}
       - IN_EXT_VIDEOS=mp4
-      - IN_FILE_VIDEOS=/var/videos/ins
+      - IN_FILE_VIDEOS=/home/ubuntu/videos/ins
       - HOST_PG=${HOST_PG}
       - PORT_PG=5432
       - USER_PG=${USER_PG}
