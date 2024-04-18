@@ -14,7 +14,7 @@ services:
       - URL_HOST_BASE=${URL_HOST_BASE}
       - HOST_QUEUE=${HOST_QUEUE}
       - PORT_QUEUE=61613
-      - NAME_QUEUE='videos'
+      - NAME_QUEUE=videos
       - USER_QUEUE=${USER_QUEUE}
       - PWD_QUEUE=${PWD_QUEUE}
       - IN_EXT_VIDEOS=mp4
