@@ -7,6 +7,7 @@ from models.models import db
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask import request
 from flask_restful import Resource
+from utils.jwt_util import get_user_id
 
 video_ext = os.environ.get('IN_EXT_VIDEOS', 'mp4')
 
@@ -77,12 +78,11 @@ class ViewTasks(Resource):
         stomp_connect(conn)
 
     @staticmethod
-    @jwt_required()
     def post():
         print('[Http] Starting request')
 
         # Check if the request is associated to a user
-        user_id = get_jwt_identity()
+        user_id = get_user_id()
         user = User.query.get(user_id)
 
         if user is None:
@@ -123,7 +123,7 @@ class ViewTasks(Resource):
             db.session.commit()
 
             # Send task to queue
-            stomp_send({'id': task.id})
+            stomp_send({'id': task.id, 'path_origin': task.path_origin})
 
             return {
                 'id': task.id,

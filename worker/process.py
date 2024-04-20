@@ -1,3 +1,4 @@
+import gc
 import datetime
 from typing import Union
 from worker import run_worker
@@ -6,31 +7,23 @@ from models.declarative_base import session
 from utils.video_util import process_video
 
 
-def __get_task__(task_id: int) -> Union[Task, None]:
+def __update_task__(task_id, status: Status, path_processed: Union[str, None]) -> bool:
     try:
-        task = session.query(Task).filter(Task.id == task_id).one_or_none()
-
-        return task
-    except Exception as ex:
-        print('[Process][get_task] error {}'.format(str(ex)))
-        return None
-
-
-def __update_task__(task: Task, status: Status, path_processed: Union[str, None]) -> Union[Task, None]:
-    try:
-        task.status = status
-        task.path_processed = path_processed
-        task.updated_at = datetime.datetime.now()
+        session.query(Task).filter(Task.id == task_id).update({
+            'status': status,
+            'path_processed': path_processed,
+            'updated_at': datetime.datetime.now(),
+        })
         session.commit()
 
-        return task
+        return True
     except Exception as ex:
-        print('[Process][__update_task__] taskId: {}, error {}'.format(str(task.id), str(ex)))
-        return None
+        print('[Process][__update_task__] taskId: {}, error {}'.format(str(task_id), str(ex)))
+        return False
 
 
-def __process_and_update__(task: Task) -> Union[Task, None]:
-    result_process_video = process_video(task.path_origin)
+def __process_and_update__(task_id, path_origin) -> Union[Task, bool]:
+    result_process_video = process_video(path_origin)
 
     if 'path_processed' in result_process_video:
         status = Status.PROCESSED
@@ -39,31 +32,31 @@ def __process_and_update__(task: Task) -> Union[Task, None]:
         status = Status.ERROR
         path_processed = None
 
-    task_updated = __update_task__(task, status, path_processed)
+    task_updated = __update_task__(task_id, status, path_processed)
     print('[Process][__process_and_update__] result: {}'.format(str({
-        "task_id": task.id,
+        "task_id": task_id,
         "status": status.value,
-        "path_processed": path_processed,
     })))
 
     return task_updated
 
 
 def process(input_data):
+    gc.collect()
     print('[Process] New event: {}'.format(str(input_data)))
     task_id = input_data["id"]
+    path_origin = input_data["path_origin"]
 
     if task_id is None or type(task_id) is not int:
         print('[Process] event is incorrect, input: {}'.format(str(input_data)))
         return
 
-    task = __get_task__(task_id)
-
-    if task is None:
-        print('[Process] task {} is not exists'.format(str(task_id)))
+    if path_origin is None:
+        print('[Process] path_origin {} is not exists'.format(str(task_id)))
         return
 
-    __process_and_update__(task)
+    __process_and_update__(task_id, path_origin)
+    gc.collect()
 
 
 if __name__ == '__main__':

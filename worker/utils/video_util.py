@@ -1,8 +1,11 @@
 import os
+import gc
 from datetime import datetime
 from faker import Faker
 from moviepy.editor import VideoFileClip, ImageClip, CompositeVideoClip
 from moviepy.video.fx.all import crop
+
+pcd_threads = int(os.environ.get('TOTAL_THREADS', '2'))
 
 # Videos Results configuration
 video_ext = os.environ.get('OUT_EXT_VIDEOS', 'mp4')
@@ -23,6 +26,7 @@ faker = Faker()
 
 
 def process_video(path):
+    gc.collect()
     video = get_video_buffer(path)
 
     if type(video) is str:
@@ -36,17 +40,18 @@ def process_video(path):
         str(height_original)),
     )
 
-    new_video = resize_video(video)
+    video = resize_video(video)
 
-    if type(new_video) is str:
-        return {"end": False, "status": "error", "message": new_video}
+    if type(video) is str:
+        return {"end": False, "status": "error", "message": video}
 
-    video_frames = add_frames(new_video)
+    video = add_frames(video)
 
-    if type(video_frames) is str:
-        return {"end": False, "status": "error", "message": video_frames}
+    if type(video) is str:
+        return {"end": False, "status": "error", "message": video}
 
-    response_save = save_new_video(video_frames)
+    response_save = save_new_video(video)
+    gc.collect()
 
     if type(response_save) is str:
         return {"end": False, "status": "error", "message": response_save}
@@ -54,39 +59,47 @@ def process_video(path):
     return {"path_processed": response_save["path_processed"]}
 
 
-def save_new_video(new_video):
+def save_new_video(video):
     try:
         date = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
         uuid = faker.unique.iban()
         path = '{}/{}_{}.{}'.format(out_result_file, date, uuid, video_ext)
         print('[VideoUtil][save_new_video] Start new video, {}'.format(str(datetime.now())))
-        new_video.write_videofile(path, logger=None, fps=25)
-        new_video.close()
+        video.write_videofile(path, logger=None, fps=30, threads=pcd_threads, preset='superfast')
+        video.close()
+        del video
         print('[VideoUtil][save_new_video] Finished new video, {}'.format(str(datetime.now())))
 
         return {"path_processed": path}
     except Exception as ex:
         print('[VideoUtil][save_new_video] error {}'.format(str(ex)))
+        del video
+        gc.collect()
         return str(ex)
 
 
-def add_frames(new_video):
+def add_frames(video):
     try:
         start_frame = (ImageClip("{}/start_frame.jpg".format(dir_frames))
                        .set_start(0).set_duration(1)
-                       .set_pos(("center", "center"))
-                       .resize(height=new_video.h, width=new_video.w))
+                       .set_pos(("center", "center")))
         end_frame = (ImageClip("{}/end_frame.jpeg".format(dir_frames))
-                     .set_start(new_video.duration + 1).set_duration(1)
-                     .set_pos(("center", "center"))
-                     .resize(height=new_video.h, width=new_video.w))
-        new_video = (new_video.set_start(1).set_pos(("center", "center")))
-        new_video = CompositeVideoClip([start_frame, new_video, end_frame])
+                     .set_start(video.duration + 1).set_duration(1)
+                     .set_pos(("center", "center")))
+        video = (video.set_start(1).set_pos(("center", "center")))
+        video = CompositeVideoClip([start_frame, video, end_frame])
+        start_frame.close()
+        end_frame.close()
+        del start_frame
+        del end_frame
         print('[VideoUtil][add_frames] New Video')
 
-        return new_video
+        return video
     except Exception as ex:
         print('[VideoUtil][add_frames] error {}'.format(str(ex)))
+        video.close()
+        del video
+        gc.collect()
         return str(ex)
 
 
@@ -104,6 +117,9 @@ def resize_video(video):
         return video
     except Exception as ex:
         print('[VideoUtil][resize_video] error {}'.format(str(ex)))
+        video.close()
+        del video
+        gc.collect()
         return str(ex)
 
 
@@ -113,7 +129,10 @@ def get_video_buffer(path: str):
         duration_current = video.duration
         max_duration = video_max_duration if duration_current > video_max_duration else duration_current
 
-        return video.subclip(0, max_duration)
+        video = video.subclip(0, max_duration)
+
+        return video
     except Exception as ex:
         print('[VideoUtil][get_video_buffer] error {}'.format(str(ex)))
+        gc.collect()
         return str(ex)

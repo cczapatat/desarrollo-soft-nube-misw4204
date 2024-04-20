@@ -3,22 +3,22 @@ from flask_restful import Resource
 from models.models import Task, TaskSchema, db
 from utils.url_util import create_url_to_public
 from utils.delete_file import remove_file
+from utils.jwt_util import get_user_id
 
 task_schema = TaskSchema()
 
 
 class ViewTask(Resource):
-    
-    @jwt_required()
+
     def get(self, id_task):
-        user_id = get_jwt_identity()
+        user_id = get_user_id()
         task = Task.query.filter(Task.id == id_task).one_or_none()
 
         if task is None:
             return {'message': 'not found'}, 404
-        
-        if task.user_id != user_id:
-            return {'message': 'forbbiden access to task'}, 401
+
+        if int(task.user_id) != int(user_id):
+            return {'message': 'forbidden access to task'}, 401
 
         data_response = task_schema.dump(task)
         data_response['url_recovery'] = create_url_to_public(task.path_origin)

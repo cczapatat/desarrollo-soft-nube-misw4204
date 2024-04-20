@@ -2,6 +2,13 @@ version: "3.8"
 
 services:
   worker:
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: '2000m'
+        reservations:
+          memory: '256m'
     build: ./worker
     container_name: worker_nube
     volumes:

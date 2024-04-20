@@ -8,7 +8,7 @@ import threading
 host = os.environ.get('HOST_QUEUE', 'localhost')
 port = os.environ.get('PORT_QUEUE', 61613)
 hosts = [(host, port)]
-name_queue = os.environ.get('NAME_QUEUE', 'worker')
+name_queue = os.environ.get('NAME_QUEUE', 'videos')
 user_queue = os.environ.get('USER_QUEUE', 'admin')
 password_queue = os.environ.get('PWD_QUEUE', 'admin')
 cliente_queue = 'worker'

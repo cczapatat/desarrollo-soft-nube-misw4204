@@ -2,6 +2,13 @@ version: "3.8"
 
 services:
   queue:
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: '2000m'
+        reservations:
+          memory: '256m'
     image: apache/activemq-classic
     container_name: queue_nube
     environment:

@@ -39,4 +39,4 @@ class ViewSignUp(Resource):
             }, 200
         
         except:
-            return {'message':'An error has ocurred'}, 500
+            return {'message':'An error has occurred'}, 500

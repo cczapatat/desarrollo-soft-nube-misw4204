@@ -19,9 +19,9 @@ class ViewLogin(Resource):
         try:
             access_token = create_access_token(identity = user.id, expires_delta = timedelta(days = 1))
             return {
-                'message':'Sesion started',
+                'message':'Session started',
                 'access_token':access_token
             }, 200
         
         except:
-            return {'message':'An error has ocurred'}, 500
+            return {'message':'An error has occurred'}, 500

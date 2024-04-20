@@ -2,6 +2,13 @@ version: "3.8"
 
 services:
   api:
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: '2000m'
+        reservations:
+          memory: '256m'
     build: ./api
     container_name: api_nube
     volumes:
