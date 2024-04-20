@@ -12,7 +12,7 @@
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="SaveTasks">
         <stringProp name="TestPlan.comments">primer escenario</stringProp>
         <intProp name="ThreadGroup.num_threads">100</intProp>
-        <intProp name="ThreadGroup.ramp_time">300</intProp>
+        <intProp name="ThreadGroup.ramp_time">200</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
@@ -35,7 +35,7 @@
             <collectionProp name="HTTPFileArgs.files">
               <elementProp name="/Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/videos/ins/example.mp4" elementType="HTTPFileArg">
                 <stringProp name="File.mimetype">application/octet-stream</stringProp>
-                <stringProp name="File.path">/Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/videos/ins/example.mp4</stringProp>
+                <stringProp name="File.path">/home/ubuntu/desarrollo-soft-nube-misw4204/videos/ins/example.mp4</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
               </elementProp>
             </collectionProp>
@@ -310,7 +310,7 @@
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV_Data_Set_Config">
           <stringProp name="delimiter">,</stringProp>
           <stringProp name="fileEncoding">UTF-8</stringProp>
-          <stringProp name="filename">/Users/cristian.zapata/Downloads/users_id.csv</stringProp>
+          <stringProp name="filename">/home/ubuntu/desarrollo-soft-nube-misw4204/jmeter/users_id.csv</stringProp>
           <boolProp name="ignoreFirstLine">true</boolProp>
           <boolProp name="quotedData">false</boolProp>
           <boolProp name="recycle">true</boolProp>
