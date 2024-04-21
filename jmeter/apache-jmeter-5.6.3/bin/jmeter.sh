@@ -104,6 +104,7 @@ fi
 JMETER_COMPLETE_ARGS=true
 
 # add the Java9 args before the user given ones
+JVM_ARGS="-Xms512m -Xmx1000m"
 JVM_ARGS="$JAVA9_OPTS $JVM_ARGS"
 export JVM_ARGS JMETER_COMPLETE_ARGS
 
