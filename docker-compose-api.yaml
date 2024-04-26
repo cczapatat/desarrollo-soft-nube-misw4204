@@ -33,4 +33,5 @@ services:
       - DB_NAME_PG=videos
     ports:
       - "6000:6000"
+      - "80:6000"
     command: bash -c "echo 'Starting Api' && python api.py"

@@ -10,6 +10,7 @@ from views.view_tasks import ViewTasks
 from views.view_video import ViewVideo
 from views.view_signup import ViewSignUp
 from views.view_login import ViewLogin
+from views.view_health import ViewHealth
 
 host = os.environ.get('HOST_PG', 'localhost')
 port = os.environ.get('PORT_PG', 5432)
@@ -37,6 +38,7 @@ def create_flask_app():
 
 def add_urls(_app):
     api = Api(_app)
+    api.add_resource(ViewHealth, '/')
     api.add_resource(ViewSignUp, '/api/auth/signup')
     api.add_resource(ViewLogin, '/api/auth/login')
     api.add_resource(ViewTasks, '/api/tasks')
