@@ -5,3 +5,8 @@ moviepy==1.0.3
 sqlalchemy==2.0.29
 psycopg2==2.9.9
 Faker==24.7.1
+Werkzeug==2.3.0
+google-api-core==2.18.0
+google-auth==2.29.0
+google-cloud-core==2.4.1
+google-cloud-storage==2.16.0

@@ -4,6 +4,10 @@ from datetime import datetime
 from faker import Faker
 from moviepy.editor import VideoFileClip, ImageClip, CompositeVideoClip
 from moviepy.video.fx.all import crop
+from .storage import download_blob
+from .storage import upload_file
+from werkzeug.utils import secure_filename
+import tempfile
 
 pcd_threads = int(os.environ.get('TOTAL_THREADS', '2'))
 
@@ -15,6 +19,7 @@ dirname = os.path.dirname(__file__)
 dir_frames = '{}/../frames'.format(dirname)
 
 out_result_path = os.environ.get('OUT_FILE_VIDEOS', '')
+out_result_path_gs = os.environ.get('OUT_GS_FILE_VIDEOS')
 is_out_result_path_filled = len(out_result_path) > 0
 
 if is_out_result_path_filled:
@@ -24,10 +29,20 @@ else:
 
 faker = Faker()
 
-
+# Helper function that computes the filepath to save files to
+def get_file_path(filename):
+    # Note: tempfile.gettempdir() points to an in-memory file system
+    # on GCF. Thus, any files in it must fit in the instance's memory.
+    file_name = secure_filename(filename)
+    return os.path.join(tempfile.gettempdir(), file_name)
 def process_video(path):
     gc.collect()
-    video = get_video_buffer(path)
+    if not os.path.exists('/backend/videos/gs/ins'):
+        os.makedirs('/backend/videos/gs/ins')
+    download_blob(path,'/backend/videos/gs/'+path)
+
+    video = get_video_buffer('/backend/videos/gs/'+path)
+
 
     if type(video) is str:
         return {"end": False, "status": "error", "message": video}
@@ -51,6 +66,8 @@ def process_video(path):
         return {"end": False, "status": "error", "message": video}
 
     response_save = save_new_video(video)
+
+    os.remove('/backend/videos/gs/' + path)
     gc.collect()
 
     if type(response_save) is str:
@@ -63,11 +80,25 @@ def save_new_video(video):
     try:
         date = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
         uuid = faker.unique.iban()
-        path = '{}/{}_{}.{}'.format(out_result_file, date, uuid, video_ext)
+        path = '{}/{}_{}.{}'.format(out_result_path_gs, date, uuid, video_ext)
+        path_temp = '/backend/videos/gs/' + path
+        if not os.path.exists('/backend/videos/gs/outs'):
+            os.makedirs('/backend/videos/gs/outs')
         print('[VideoUtil][save_new_video] Start new video, {}'.format(str(datetime.now())))
-        video.write_videofile(path, logger=None, fps=30, threads=pcd_threads, preset='superfast')
+        print('[VideoUtil][save_new_video] Path temp, {}'.format(path_temp))
+        print('[VideoUtil][save_new_video] Path GS, {}'.format(path))
+
+        video.write_videofile(path_temp, logger=None, fps=30, threads=pcd_threads, preset='superfast')
+        print('[VideoUtil][save_new_video] video saved')
         video.close()
         del video
+
+        public_url = upload_file(
+            path_temp,
+            path
+        )
+        print("[VideoUtil][save_new_video] Uploaded new video, {}".format(path))
+        os.remove(path_temp)
         print('[VideoUtil][save_new_video] Finished new video, {}'.format(str(datetime.now())))
 
         return {"path_processed": path}
