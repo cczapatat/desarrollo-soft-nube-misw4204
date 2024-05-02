@@ -25,7 +25,7 @@ response = client.access_secret_version(request={"name": secret_name})
 secret_payload = response.payload.data.decode("UTF-8")
 
 # Write the secret to a temporary file
-temp_file_path = "/path/to/temp/secret.json"
+temp_file_path = "/backend/secret.json"
 with open(temp_file_path, "w") as f:
     f.write(secret_payload)
 
