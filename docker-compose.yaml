@@ -79,11 +79,15 @@ services:
       OUT_EXT_VIDEOS: 'mp4'
       MAX_DIRECTION_VIDEOS: 20
       OUT_FILE_VIDEOS: /backend/videos/outs
+      OUT_GS_FILE_VIDEOS: outs
       HOST_PG: 'postgres'
       PORT_PG: 5432
       USER_PG: 'postgres'
       PWD_PG: 'postgres'
       DB_NAME_PG: 'videos'
+      GCLOUD_PROJECT: 'soluciones-cloud-202402'
+      GCLOUD_BUCKET: 'soluciones-cloud-202402-videos2'
+      GOOGLE_APPLICATION_CREDENTIALS: './soluciones-cloud-202402-0e8b6bdf4d5b.json'
     command: bash -c "chmod +x /wait && /wait && echo 'Starting worker videos' && python init_bd.py && python process.py"
 
   api:
@@ -117,12 +121,16 @@ services:
       PWD_QUEUE: 'admin'
       IN_EXT_VIDEOS: 'mp4'
       IN_FILE_VIDEOS: /backend/videos/ins
+      IN_GS_FILE_VIDEOS: ins
       HOST_PG: 'postgres'
       PORT_PG: 5432
       USER_PG: 'postgres'
       PWD_PG: 'postgres'
       DB_NAME_PG: 'videos'
       API_KEY: 'ApiKeyTestLoadGp10'
+      GCLOUD_PROJECT: 'soluciones-cloud-202402'
+      GCLOUD_BUCKET: 'soluciones-cloud-202402-videos2'
+      GOOGLE_APPLICATION_CREDENTIALS: './soluciones-cloud-202402-0e8b6bdf4d5b.json'
     ports:
       - "6000:6000"
     command: bash -c "chmod +x /wait && /wait && echo 'Starting Api' && python api.py"

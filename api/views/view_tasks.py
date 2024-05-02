@@ -8,6 +8,9 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask import request
 from flask_restful import Resource
 from utils.jwt_util import get_user_id
+from utils.storage import upload_file
+from werkzeug.utils import secure_filename
+import tempfile
 
 video_ext = os.environ.get('IN_EXT_VIDEOS', 'mp4')
 
@@ -15,6 +18,7 @@ dirname = os.path.dirname(__file__)
 dir_frames = '{}/../frames'.format(dirname)
 
 in_result_path = os.environ.get('IN_FILE_VIDEOS', '')
+in_result_path_gs = os.environ.get('IN_GS_FILE_VIDEOS')
 is_in_result_path_filled = len(in_result_path) > 0
 
 if is_in_result_path_filled:
@@ -34,6 +38,9 @@ user_queue = os.environ.get('USER_QUEUE', 'admin')
 password_queue = os.environ.get('PWD_QUEUE', 'admin')
 cliente_queue = 'api'
 
+def get_file_path(filename):
+    file_name = secure_filename(filename)
+    return os.path.join(tempfile.gettempdir(), file_name)
 
 def stomp_connect(_conn):
     if not _conn.is_connected():
@@ -96,6 +103,7 @@ class ViewTasks(Resource):
             }, 400
 
         file = request.files['file']
+        files = request.files.to_dict()
 
         # Check if the file is empty
         if file.filename == '':
@@ -107,23 +115,32 @@ class ViewTasks(Resource):
         print('[NewTask] userId: {}, fileOriginName: {}'.format(user_id, filename_origin))
 
         try:
-            date = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
-            uuid = faker.unique.iban()
-            path = '{}/{}_{}.{}'.format(in_result_file, date, uuid, video_ext)
+            for file_name, file_entity in files.items():
+                file_entity.save(get_file_path(file_name))
+                date = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+                uuid = faker.unique.iban()
+                path2 = '{}/{}_{}.{}'.format(in_result_path_gs, date, uuid, video_ext)
 
-            print('[NewTask] userId: {}, fileOriginName: {}, to path: {}'.format(user_id, filename_origin, path))
+                print('[NewTask] userId: {}, fileOriginName: {}, to path: {}'.format(user_id, filename_origin, path2))
 
-            # save video to folder
-            file.save(path)
+                public_url = upload_file(
+                    get_file_path(file_name),
+                    path2
+                )
+                print("Processed file: %s" % file_name)
+            # Clear temporary directory
+            for file_name in files:
+                file_path = get_file_path(file_name)
+                os.remove(file_path)
             print('[NewTask] saved userId: {}, fileOriginName: {}'.format(user_id, filename_origin))
 
             # save task
-            task = Task(user_id=int(user_id), file_name=filename_origin, path_origin=path, status=Status.UPLOADED)
+            task = Task(user_id=int(user_id), file_name=filename_origin, path_origin=path2, status=Status.UPLOADED)
             db.session.add(task)
             db.session.commit()
 
             # Send task to queue
-            stomp_send({'id': task.id, 'path_origin': task.path_origin})
+            stomp_send({'id': task.id, 'path_origin': task.path_origin, 'path_origin_gs': path2})
 
             return {
                 'id': task.id,
