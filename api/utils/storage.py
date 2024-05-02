@@ -9,14 +9,13 @@ from google.cloud import secretmanager
 from google.oauth2 import service_account
 import json
 
-storage_client = storage.Client()
-bucket = storage_client.bucket(bucket_name)
+
 
 # Initialize the Secret Manager client
 client = secretmanager.SecretManagerServiceClient()
 
 # Define the secret name
-secret_name = "projects/616996447568/secrets/storage-credentials"
+secret_name = "projects/616996447568/secrets/storage-credentials/versions/3"
 
 # Access the secret
 response = client.access_secret_version(request={"name": secret_name})
@@ -29,8 +28,12 @@ temp_file_path = "/backend/secret.json"
 with open(temp_file_path, "w") as f:
     f.write(secret_payload)
 
+print("storing crdentials from vault")
 # Set the GOOGLE_APPLICATION_CREDENTIALS environment variable
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = temp_file_path
+
+storage_client = storage.Client()
+bucket = storage_client.bucket(bucket_name)
 
 def upload_file(source_file_name, destination_blob_name):
 
