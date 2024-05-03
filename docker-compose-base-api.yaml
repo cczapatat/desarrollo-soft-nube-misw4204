@@ -1,0 +1,9 @@
+version: "3.3"
+
+services:
+  api_image:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.base
+    container_name: api_image
+    working_dir: /backend/
