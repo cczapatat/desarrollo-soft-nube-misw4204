@@ -6,4 +6,5 @@ services:
       context: ./api
       dockerfile: Dockerfile.base
     container_name: api_image
+    image: api_image
     working_dir: /backend/

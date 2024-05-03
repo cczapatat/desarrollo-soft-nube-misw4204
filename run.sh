@@ -2,7 +2,7 @@
 
 docker rm worker_nube api_nube api_image
 
-docker rmi desarrollo-soft-nube-misw4204-worker desarrollo-soft-nube-misw4204-api desarrollo-soft-nube-misw4204-api_image
+docker rmi desarrollo-soft-nube-misw4204-worker desarrollo-soft-nube-misw4204-api api_image
 
 docker volume rm desarrollo-soft-nube-misw4204_shared-volume
 
