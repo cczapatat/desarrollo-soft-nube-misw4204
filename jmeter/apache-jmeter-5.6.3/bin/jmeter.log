@@ -42,3 +42,20 @@
 2024-05-04 02:00:57,933 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
 2024-05-04 02:00:57,933 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
 2024-05-04 02:00:58,528 INFO o.a.j.s.FileServer: Set new base='C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter'
+2024-05-04 02:26:43,459 INFO o.a.j.s.FileServer: Set new base='C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter'
+2024-05-04 02:26:56,353 INFO o.a.j.g.a.Load: Loading file: C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter\save_task_v2.jmx
+2024-05-04 02:26:56,354 INFO o.a.j.s.FileServer: Set new base='C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter'
+2024-05-04 02:26:56,354 INFO o.a.j.s.SaveService: Loading file: C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter\save_task_v2.jmx
+2024-05-04 02:26:56,511 INFO o.a.j.s.FileServer: Set new base='C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter'
+2024-05-04 02:29:08,610 INFO o.a.j.g.a.Load: Loading file: C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter\get_task_v2.jmx
+2024-05-04 02:29:08,610 INFO o.a.j.s.FileServer: Set new base='C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter'
+2024-05-04 02:29:08,610 INFO o.a.j.s.SaveService: Loading file: C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter\get_task_v2.jmx
+2024-05-04 02:29:08,632 INFO o.a.j.s.FileServer: Set new base='C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter'
+2024-05-04 02:34:58,328 INFO o.a.j.g.a.Load: Loading file: C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter\save_task_v2.jmx
+2024-05-04 02:34:58,328 INFO o.a.j.s.FileServer: Set new base='C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter'
+2024-05-04 02:34:58,328 INFO o.a.j.s.SaveService: Loading file: C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter\save_task_v2.jmx
+2024-05-04 02:34:58,484 INFO o.a.j.s.FileServer: Set new base='C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter'
+2024-05-04 02:35:15,768 INFO o.a.j.g.a.Load: Loading file: C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter\get_task_v2.jmx
+2024-05-04 02:35:15,768 INFO o.a.j.s.FileServer: Set new base='C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter'
+2024-05-04 02:35:15,768 INFO o.a.j.s.SaveService: Loading file: C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter\get_task_v2.jmx
+2024-05-04 02:35:15,835 INFO o.a.j.s.FileServer: Set new base='C:\Users\icgodmem\Desktop\andes\materias\semestre2\Desarroll_software_nube\drones\desarrollo-soft-nube-misw4204\jmeter'
