@@ -11,7 +11,7 @@
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="SaveTasks">
         <stringProp name="TestPlan.comments">primer escenario</stringProp>
-        <intProp name="ThreadGroup.num_threads">1300</intProp>
+        <intProp name="ThreadGroup.num_threads">1325</intProp>
         <intProp name="ThreadGroup.ramp_time">120</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -23,8 +23,8 @@
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="save_task">
           <stringProp name="TestPlan.comments">Request - Save Task</stringProp>
-          <stringProp name="HTTPSampler.domain">34.49.10.90</stringProp>
-          <stringProp name="HTTPSampler.port">80</stringProp>
+          <stringProp name="HTTPSampler.domain">34.70.157.153</stringProp>
+          <stringProp name="HTTPSampler.port">6000</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
           <stringProp name="HTTPSampler.path">/api/tasks</stringProp>
@@ -33,7 +33,7 @@
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
             <collectionProp name="HTTPFileArgs.files">
-              <elementProp name="/home/ubuntu/desarrollo-soft-nube-misw4204/videos/ins/example.mp4" elementType="HTTPFileArg">
+              <elementProp name="/Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/videos/ins/example.mp4" elementType="HTTPFileArg">
                 <stringProp name="File.mimetype">application/octet-stream</stringProp>
                 <stringProp name="File.path">/home/ubuntu/desarrollo-soft-nube-misw4204/videos/ins/example.mp4</stringProp>
                 <stringProp name="File.paramname">file</stringProp>
@@ -46,7 +46,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="headers_save_task">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="headers_save_task" enabled="true">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">ApiKey</stringProp>
