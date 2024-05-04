@@ -115,23 +115,21 @@ class ViewTasks(Resource):
         print('[NewTask] userId: {}, fileOriginName: {}'.format(user_id, filename_origin))
 
         try:
-            for file_name, file_entity in files.items():
-                file_entity.save(get_file_path(file_name))
-                date = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
-                uuid = faker.unique.iban()
-                path2 = '{}/{}_{}.{}'.format(in_result_path_gs, date, uuid, video_ext)
+            uuid = faker.unique.iban()
+            name_file = '{}_{}'.format(uuid, filename_origin)
+            file.save(get_file_path(name_file))
+            date = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+            path2 = '{}/{}_{}.{}'.format(in_result_path_gs, date, uuid, video_ext)
 
-                print('[NewTask] userId: {}, fileOriginName: {}, to path: {}'.format(user_id, filename_origin, path2))
+            print('[NewTask] userId: {}, fileOriginName: {}, to path: {}'.format(user_id, filename_origin, path2))
 
-                public_url = upload_file(
-                    get_file_path(file_name),
-                    path2
-                )
-                print("Processed file: %s" % file_name)
-            # Clear temporary directory
-            for file_name in files:
-                file_path = get_file_path(file_name)
+            upload_file(get_file_path(name_file), path2)
+            print("Processed file: %s" % name_file)
+
+            file_path = get_file_path(name_file)
+            if os.path.exists(file_path):
                 os.remove(file_path)
+
             print('[NewTask] saved userId: {}, fileOriginName: {}'.format(user_id, filename_origin))
 
             # save task
