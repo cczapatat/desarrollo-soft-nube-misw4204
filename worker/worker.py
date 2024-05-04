@@ -3,6 +3,7 @@ import json
 import stomp
 import time
 import threading
+from faker import Faker
 
 # ActiveMQ configuration
 host = os.environ.get('HOST_QUEUE', 'localhost')
@@ -11,7 +12,8 @@ hosts = [(host, port)]
 name_queue = os.environ.get('NAME_QUEUE', 'videos')
 user_queue = os.environ.get('USER_QUEUE', 'admin')
 password_queue = os.environ.get('PWD_QUEUE', 'admin')
-cliente_queue = 'worker'
+faker = Faker()
+cliente_queue = 'api_{}'.format(faker.unique.iban())
 
 
 def _stomp_connect(_conn):
