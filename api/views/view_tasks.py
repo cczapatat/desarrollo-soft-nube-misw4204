@@ -36,7 +36,8 @@ hosts = [(host, port)]
 name_queue = os.environ.get('NAME_QUEUE', 'worker')
 user_queue = os.environ.get('USER_QUEUE', 'admin')
 password_queue = os.environ.get('PWD_QUEUE', 'admin')
-cliente_queue = 'api_{}'.format(faker.unique.iban())
+date_queue = datetime.now().strftime("%Y_%m_%d_%H_%M_%S_%f")
+cliente_queue = 'api{}{}'.format(faker.unique.iban(), date_queue)
 
 def get_file_path(filename):
     file_name = secure_filename(filename)
