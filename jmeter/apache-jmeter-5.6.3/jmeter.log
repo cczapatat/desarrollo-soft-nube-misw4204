@@ -1,50 +1,30 @@
-2024-05-03 22:01:05,772 INFO o.a.j.u.JMeterUtils: Setting Locale to en_CO
-2024-05-03 22:01:05,814 INFO o.a.j.JMeter: Loading user properties from: /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/bin/user.properties
-2024-05-03 22:01:05,815 INFO o.a.j.JMeter: Loading system properties from: /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/bin/system.properties
-2024-05-03 22:01:05,822 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
-2024-05-03 22:01:05,822 INFO o.a.j.JMeter: Version 5.6.3
-2024-05-03 22:01:05,822 INFO o.a.j.JMeter: java.version=17.0.7
-2024-05-03 22:01:05,822 INFO o.a.j.JMeter: java.vm.name=Java HotSpot(TM) 64-Bit Server VM
-2024-05-03 22:01:05,822 INFO o.a.j.JMeter: os.name=Mac OS X
-2024-05-03 22:01:05,822 INFO o.a.j.JMeter: os.arch=x86_64
-2024-05-03 22:01:05,822 INFO o.a.j.JMeter: os.version=14.4.1
-2024-05-03 22:01:05,822 INFO o.a.j.JMeter: file.encoding=UTF-8
-2024-05-03 22:01:05,823 INFO o.a.j.JMeter: java.awt.headless=null
-2024-05-03 22:01:05,823 INFO o.a.j.JMeter: Max memory     =1048576000
-2024-05-03 22:01:05,823 INFO o.a.j.JMeter: Available Processors =16
-2024-05-03 22:01:05,831 INFO o.a.j.JMeter: Default Locale=English (Colombia)
-2024-05-03 22:01:05,831 INFO o.a.j.JMeter: JMeter  Locale=English (Colombia)
-2024-05-03 22:01:05,831 INFO o.a.j.JMeter: JMeterHome=/Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3
-2024-05-03 22:01:05,831 INFO o.a.j.JMeter: user.dir  =/Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3
-2024-05-03 22:01:05,831 INFO o.a.j.JMeter: PWD       =/Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3
-2024-05-03 22:01:05,832 INFO o.a.j.JMeter: IP: 127.0.0.1 Name: CO-C02CR3H3MD6N.local FullName: localhost
-2024-05-03 22:01:05,850 INFO o.a.j.JMeter: Loaded icon properties from org/apache/jmeter/images/icon.properties
-2024-05-03 22:01:06,802 INFO o.a.j.JMeterGuiLauncher: Setting LAF to: com.github.weisj.darklaf.DarkLaf:com.github.weisj.darklaf.theme.DarculaTheme
-2024-05-03 22:01:08,568 INFO o.a.j.r.ClassFinder: Will scan jar /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/jmeter-plugins-manager-0.20.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.gui.action.Command], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
-2024-05-03 22:01:08,650 INFO o.a.j.r.ClassFinder: Will scan jar /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/jmeter-plugins-graphs-basic-2.0.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.gui.action.Command], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
-2024-05-03 22:01:08,715 INFO o.a.j.r.ClassFinder: Will scan jar /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/jmeter-plugins-manager-0.20.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.gui.plugin.MenuCreator], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
-2024-05-03 22:01:08,718 INFO o.a.j.r.ClassFinder: Will scan jar /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/jmeter-plugins-graphs-basic-2.0.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.gui.plugin.MenuCreator], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
-2024-05-03 22:01:12,707 INFO o.j.r.PluginManager: Plugins Status: [jpgc-graphs-basic=2.0, jpgc-plugins-manager=0.20, jmeter-core=5.6.3, jmeter-ftp=5.6.3, jmeter-http=5.6.3, jmeter-jdbc=5.6.3, jmeter-jms=5.6.3, jmeter-junit=5.6.3, jmeter-java=5.6.3, jmeter-ldap=5.6.3, jmeter-mail=5.6.3, jmeter-mongodb=5.6.3, jmeter-native=5.6.3, jmeter-tcp=5.6.3, jmeter-components=5.6.3]
-2024-05-03 22:01:12,708 INFO o.j.r.PluginManagerMenuItem: Plugins Manager has upgrades: [jpgc-plugins-manager]
-2024-05-03 22:01:28,091 INFO o.a.j.s.FileServer: Default base='/Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3'
-2024-05-03 22:01:28,099 INFO o.a.j.g.a.Load: Loading file: /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/save_task_v1.jmx
-2024-05-03 22:01:28,099 INFO o.a.j.s.FileServer: Set new base='/Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter'
-2024-05-03 22:01:28,228 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
-2024-05-03 22:01:28,234 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
-2024-05-03 22:01:28,236 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
-2024-05-03 22:01:28,237 INFO o.a.j.s.SaveService: Loading file: /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/save_task_v1.jmx
-2024-05-03 22:01:28,303 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
-2024-05-03 22:01:28,304 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
-2024-05-03 22:01:28,304 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
-2024-05-03 22:01:28,304 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
-2024-05-03 22:01:28,304 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
-2024-05-03 22:01:28,304 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
-2024-05-03 22:01:28,523 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
-2024-05-03 22:01:28,524 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to UTF-8
-2024-05-03 22:01:28,524 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
-2024-05-03 22:01:28,524 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
-2024-05-03 22:01:28,639 INFO o.a.j.r.ClassFinder: Will scan jar /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/jmeter-plugins-manager-0.20.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.visualizers.ResultRenderer], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
-2024-05-03 22:01:28,644 INFO o.a.j.r.ClassFinder: Will scan jar /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/jmeter-plugins-graphs-basic-2.0.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.visualizers.ResultRenderer], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
-2024-05-03 22:01:28,658 INFO o.a.j.r.ClassFinder: Will scan jar /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/jmeter-plugins-manager-0.20.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.visualizers.RequestView], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
-2024-05-03 22:01:28,660 INFO o.a.j.r.ClassFinder: Will scan jar /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/jmeter-plugins-graphs-basic-2.0.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.visualizers.RequestView], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
-2024-05-03 22:01:28,787 INFO o.a.j.s.FileServer: Set new base='/Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter'
+2024-05-04 19:55:33,944 INFO o.a.j.u.JMeterUtils: Setting Locale to en_CO
+2024-05-04 19:55:33,969 INFO o.a.j.JMeter: Loading user properties from: /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/bin/user.properties
+2024-05-04 19:55:33,970 INFO o.a.j.JMeter: Loading system properties from: /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/bin/system.properties
+2024-05-04 19:55:33,976 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2024-05-04 19:55:33,976 INFO o.a.j.JMeter: Version 5.6.3
+2024-05-04 19:55:33,976 INFO o.a.j.JMeter: java.version=17.0.7
+2024-05-04 19:55:33,976 INFO o.a.j.JMeter: java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+2024-05-04 19:55:33,976 INFO o.a.j.JMeter: os.name=Mac OS X
+2024-05-04 19:55:33,976 INFO o.a.j.JMeter: os.arch=x86_64
+2024-05-04 19:55:33,976 INFO o.a.j.JMeter: os.version=14.4.1
+2024-05-04 19:55:33,976 INFO o.a.j.JMeter: file.encoding=UTF-8
+2024-05-04 19:55:33,976 INFO o.a.j.JMeter: java.awt.headless=null
+2024-05-04 19:55:33,976 INFO o.a.j.JMeter: Max memory     =1048576000
+2024-05-04 19:55:33,976 INFO o.a.j.JMeter: Available Processors =16
+2024-05-04 19:55:33,983 INFO o.a.j.JMeter: Default Locale=English (Colombia)
+2024-05-04 19:55:33,983 INFO o.a.j.JMeter: JMeter  Locale=English (Colombia)
+2024-05-04 19:55:33,984 INFO o.a.j.JMeter: JMeterHome=/Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3
+2024-05-04 19:55:33,984 INFO o.a.j.JMeter: user.dir  =/Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3
+2024-05-04 19:55:33,984 INFO o.a.j.JMeter: PWD       =/Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3
+2024-05-04 19:55:33,988 INFO o.a.j.JMeter: IP: 192.168.1.7 Name: 192.168.1.7 FullName: 192.168.1.7
+2024-05-04 19:55:34,003 INFO o.a.j.JMeter: Loaded icon properties from org/apache/jmeter/images/icon.properties
+2024-05-04 19:55:34,533 INFO o.a.j.JMeterGuiLauncher: Setting LAF to: com.github.weisj.darklaf.DarkLaf:com.github.weisj.darklaf.theme.DarculaTheme
+2024-05-04 19:55:35,901 INFO o.a.j.r.ClassFinder: Will scan jar /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/jmeter-plugins-manager-0.20.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.gui.action.Command], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
+2024-05-04 19:55:35,975 INFO o.a.j.r.ClassFinder: Will scan jar /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/virtual-thread-group-plugin-1.0-SNAPSHOT.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.gui.action.Command], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
+2024-05-04 19:55:35,977 INFO o.a.j.r.ClassFinder: Will scan jar /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/jmeter-plugins-graphs-basic-2.0.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.gui.action.Command], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
+2024-05-04 19:55:36,042 INFO o.a.j.r.ClassFinder: Will scan jar /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/jmeter-plugins-manager-0.20.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.gui.plugin.MenuCreator], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
+2024-05-04 19:55:36,044 INFO o.a.j.r.ClassFinder: Will scan jar /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/virtual-thread-group-plugin-1.0-SNAPSHOT.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.gui.plugin.MenuCreator], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
+2024-05-04 19:55:36,046 INFO o.a.j.r.ClassFinder: Will scan jar /Users/cristian.zapata/Desktop/MMM/nube/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/jmeter-plugins-graphs-basic-2.0.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.gui.plugin.MenuCreator], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
+2024-05-04 19:55:37,561 INFO o.j.r.PluginManager: Plugins Status: [jpgc-graphs-basic=2.0, jpgc-plugins-manager=0.20, jmeter-core=5.6.3, jmeter-ftp=5.6.3, jmeter-http=5.6.3, jmeter-jdbc=5.6.3, jmeter-jms=5.6.3, jmeter-junit=5.6.3, jmeter-java=5.6.3, jmeter-ldap=5.6.3, jmeter-mail=5.6.3, jmeter-mongodb=5.6.3, jmeter-native=5.6.3, jmeter-tcp=5.6.3, jmeter-components=5.6.3]
+2024-05-04 19:55:37,562 INFO o.j.r.PluginManagerMenuItem: Plugins Manager has upgrades: [jpgc-plugins-manager]
