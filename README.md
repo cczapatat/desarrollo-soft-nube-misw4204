@@ -13,7 +13,7 @@
 
 ---
 
-## Despliegue Local
+## Despliegue Local - Entrega 1
 
 Para un correcto despliegue en local debe tener instalado docker y docker-compose, a continuación siga
 los siguientes pasos, los primeros son para eliminar residuos de ejecuciones anteriores y el último ejecutar
@@ -45,7 +45,7 @@ docker-compose -f docker-compose.yaml up
 
 ---
 
-## Despliegue en Nube
+## Despliegue en Nube - Entrega 2
 
 Para un correcto despliegue sobre la nube debe contar con acceso a [GCP](https://console.cloud.google.com/welcome),
 debido a que las siguientes instrucciones son referentes a este proveedor.
@@ -297,3 +297,67 @@ PWD_PG=<password-bd>
 sudo docker compose -f docker-compose-worker.yaml up -d
 ```
 - En este punto puede consumir cualquier servicio (Probar *Save new Task*!!!) la documentación [Postman](https://documenter.getpostman.com/view/5528678/2sA3BhctkL), recuerde cambiar el host por la ip de **instance-api**
+
+
+## Despliegue en Nube (Load Balancer, AutoScaling, Buckets ) - Entrega 3
+
+Para este paso ya debe contar con el previo acceso a GCP y la ejecución de los diferentes proyectos, aunque varios de
+ellos debemos proceder a apagarlos ya que son reemplazados por técnologías nube, los siguiente proyectos debe ser apagados.
+
+- instance-nfs-server
+- instance-api
+
+**Nota** tener presente que las ips de los proyectos cambian a medida que se apagan y prende, con el fin de que actualicen
+
+Ahora vamos a necesitar configurar un Load Balancer y su AutoScaling, y un Cloud Storage (Bucket).
+
+Los recursos asociados al Load Balancer y AutoScaling son los siguientes:
+
+A continuación se copia la receta para la plantilla del api la cual es la que debe quedar asociada a las instancias del
+load balancer, es decir no use la plantilla del Lab sino la siguiente.
+
+*Recuerde reemplazar los valores en <>*
+
+```ìnit
+gcloud compute instance-templates create template-api \
+   --region=us-central1 \
+   --network=default \
+   --subnet=default \
+   --tags=allow-health-check,http-server \
+   --machine-type=e2-small \
+   --image-family=ubuntu-2004-lts \
+   --image-project=ubuntu-os-cloud \
+   --labels=goog-ops-agent-policy=v2-x86-template-1-2-0,goog-ec-src=vm_add-gcloud,loggingns=true \
+   --service-account=cloud-storage-with-pre-signed@soluciones-cloud-202402.iam.gserviceaccount.com \
+   --metadata=startup-script='#!/bin/bash
+     sudo curl -sSO https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh
+     sudo bash add-google-cloud-ops-agent-repo.sh --also-install
+     sudo systemctl status google-cloud-ops-agent"*"
+     sudo apt-get update
+     sudo apt-get install git -y
+     sudo apt-get install docker.io -y
+     sudo apt-get install docker-compose -y
+     cd /home
+     sudo git clone https://github.com/cczapatat/desarrollo-soft-nube-misw4204.git
+     cd desarrollo-soft-nube-misw4204
+     echo -e "URL_HOST_BASE=<PortLoadBalancer>:<Port>" | sudo tee .env-prd
+     echo -e "HOST_QUEUE=<QueuePort>" | sudo tee -a .env-prd
+     echo -e "USER_QUEUE=admin" | sudo tee -a .env-prd
+     echo -e "PWD_QUEUE=admin" | sudo tee -a .env-prd
+     echo -e "HOST_PG=<HostDB>" | sudo tee -a .env-prd
+     echo -e "USER_PG=postgres" | sudo tee -a .env-prd
+     echo -e "API_KEY=<ApiApiKey>" | sudo tee -a .env-prd
+     echo -e "TOTAL_THREADS=2" | sudo tee -a .env-prd
+     echo -e "PWD_PG=<PasswordBD>" | sudo tee -a .env-prd
+     sudo docker-compose -f docker-compose-api.yaml --env-file .env-prd up -d'
+```
+
+- [Load Balancer](https://www.cloudskillsboost.google/focuses/12007?parent=catalog)
+- [Load Balancer y AutoScaling](https://www.youtube.com/watch?v=gjw1eaRn9U0)
+
+los recursos asociados al Cloud Storage (Bucket.)
+
+- [Cloud Storage](https://youtu.be/9uMiix6S_IE)
+
+**Importante** asigne su nuevo rol o permisos a una cuenta de servicio que use sobre las instancias de load balancer,
+de lo contrario el api desplegado no podra hacer uso del bucket
