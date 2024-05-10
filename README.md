@@ -361,3 +361,91 @@ los recursos asociados al Cloud Storage (Bucket.)
 
 **Importante** asigne su nuevo rol o permisos a una cuenta de servicio que use sobre las instancias de load balancer,
 de lo contrario el api desplegado no podra hacer uso del bucket
+
+## Despliegue en Nube (PubSub) - Entrega 4
+
+En este punto ya debe contar con un balanceador para el api con autoscaling y un bucket, ahora debemos actualizar la
+receta del api y crear la receta para el worker. Además se debe apagar la instancia de queue ya que se reemplaza por
+cloud-pubsub.
+
+**Apagar**
+
+- instance-queue
+
+## Plantilla Api
+
+*Recuerde reemplazar los valores en <>*
+
+```ìnit
+gcloud compute instance-templates create template-api \
+   --region=us-central1 \
+   --network=default \
+   --subnet=default \
+   --tags=allow-health-check,http-server \
+   --machine-type=e2-small \
+   --image-family=ubuntu-2004-lts \
+   --image-project=ubuntu-os-cloud \
+   --labels=goog-ops-agent-policy=v2-x86-template-1-2-0,goog-ec-src=vm_add-gcloud,loggingns=true \
+   --service-account=cloud-storage-with-pre-signed@soluciones-cloud-202402.iam.gserviceaccount.com \
+   --metadata=startup-script='#!/bin/bash
+     sudo curl -sSO https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh
+     sudo bash add-google-cloud-ops-agent-repo.sh --also-install
+     sudo systemctl status google-cloud-ops-agent"*"
+     sudo apt-get update
+     sudo apt-get install git -y
+     sudo apt-get install docker.io -y
+     sudo apt-get install docker-compose -y
+     cd /home
+     sudo git clone https://github.com/cczapatat/desarrollo-soft-nube-misw4204.git
+     cd desarrollo-soft-nube-misw4204
+     echo -e "URL_HOST_BASE=<PortLoadBalancer>:<Port>" | sudo tee .env-prd
+     echo -e "HOST_QUEUE=<QueuePort>" | sudo tee -a .env-prd
+     echo -e "USER_QUEUE=admin" | sudo tee -a .env-prd
+     echo -e "PWD_QUEUE=admin" | sudo tee -a .env-prd
+     echo -e "HOST_PG=<HostDB>" | sudo tee -a .env-prd
+     echo -e "USER_PG=postgres" | sudo tee -a .env-prd
+     echo -e "API_KEY=<ApiApiKey>" | sudo tee -a .env-prd
+     echo -e "TOTAL_THREADS=2" | sudo tee -a .env-prd
+     echo -e "PWD_PG=<PasswordBD>" | sudo tee -a .env-prd
+     echo -e "QUEUE_CLOUD_PROVIDER=true|false" | sudo tee -a .env-prd
+     sudo docker-compose -f docker-compose-api.yaml --env-file .env-prd up -d'
+```
+
+## Plantilla Worker
+
+*Recuerde reemplazar los valores en <>*
+
+```ìnit
+gcloud compute instance-templates create template-worker \
+   --region=us-central1 \
+   --network=default \
+   --subnet=default \
+   --tags=allow-health-check,http-server \
+   --machine-type=e2-small \
+   --image-family=ubuntu-2004-lts \
+   --image-project=ubuntu-os-cloud \
+   --labels=goog-ops-agent-policy=v2-x86-template-1-2-0,goog-ec-src=vm_add-gcloud,loggingns=true \
+   --service-account=cloud-storage-with-pre-signed@soluciones-cloud-202402.iam.gserviceaccount.com \
+   --metadata=startup-script='#!/bin/bash
+     sudo curl -sSO https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh
+     sudo bash add-google-cloud-ops-agent-repo.sh --also-install
+     sudo systemctl status google-cloud-ops-agent"*"
+     sudo apt-get update
+     sudo apt-get install git -y
+     sudo apt-get install docker.io -y
+     sudo apt-get install docker-compose -y
+     cd /home
+     sudo git clone https://github.com/cczapatat/desarrollo-soft-nube-misw4204.git
+     cd desarrollo-soft-nube-misw4204
+     echo -e "URL_HOST_BASE=<PortLoadBalancer>:<Port>" | sudo tee .env-prd
+     echo -e "HOST_QUEUE=<QueuePort>" | sudo tee -a .env-prd
+     echo -e "USER_QUEUE=admin" | sudo tee -a .env-prd
+     echo -e "PWD_QUEUE=admin" | sudo tee -a .env-prd
+     echo -e "HOST_PG=<HostDB>" | sudo tee -a .env-prd
+     echo -e "USER_PG=postgres" | sudo tee -a .env-prd
+     echo -e "API_KEY=<ApiApiKey>" | sudo tee -a .env-prd
+     echo -e "TOTAL_THREADS=2" | sudo tee -a .env-prd
+     echo -e "PWD_PG=<PasswordBD>" | sudo tee -a .env-prd
+     echo -e "QUEUE_CLOUD_PROVIDER=true|false" | sudo tee -a .env-prd
+     sudo docker-compose -f docker-compose-worker.yaml --env-file .env-prd up -d'
+```
