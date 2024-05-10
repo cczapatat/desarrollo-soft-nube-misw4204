@@ -20,3 +20,5 @@ scripts
 **.mp3
 
 .env-prd
+
+**/**.json

@@ -1,0 +1,10 @@
+version: "3.3"
+
+services:
+  worker_image:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile.base
+    container_name: worker_image
+    image: worker_image
+    working_dir: /backend/

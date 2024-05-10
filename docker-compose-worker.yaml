@@ -30,4 +30,6 @@ services:
       - OUT_GS_FILE_VIDEOS=outs
       - GCLOUD_PROJECT=soluciones-cloud-202402
       - GCLOUD_BUCKET=soluciones-cloud-202402-videos2
+      - QUEUE_CLOUD_PROVIDER=${QUEUE_CLOUD_PROVIDER}
+      - NAME_SUB=videos-sub
     command: bash -c "echo Starting worker videos && python init_bd.py && python process.py"

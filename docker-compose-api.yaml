@@ -31,7 +31,7 @@ services:
       - IN_GS_FILE_VIDEOS=ins
       - GCLOUD_PROJECT=soluciones-cloud-202402
       - GCLOUD_BUCKET=soluciones-cloud-202402-videos2
-      - QUEUE_CLOUD_PROVIDER=true
+      - QUEUE_CLOUD_PROVIDER=${QUEUE_CLOUD_PROVIDER}
       - NAME_SUB=videos-sub
     ports:
       - "6000:6000"

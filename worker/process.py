@@ -1,10 +1,15 @@
+import os
 import gc
 import datetime
 from typing import Union
-from worker import run_worker
 from models.task import Task, Status
 from models.declarative_base import session
 from utils.video_util import process_video
+
+if os.environ.get('QUEUE_CLOUD_PROVIDER', 'true') == 'true':
+    from pubsub import run_pubsub
+else:
+    from worker import run_worker
 
 
 def __update_task__(task_id, status: Status, path_processed: Union[str, None]) -> bool:
@@ -60,4 +65,7 @@ def process(input_data):
 
 
 if __name__ == '__main__':
-    run_worker(process)
+    if os.environ.get('QUEUE_CLOUD_PROVIDER', 'true') == 'true':
+        run_pubsub(process)
+    else:
+        run_worker(process)

@@ -88,8 +88,8 @@ services:
       GCLOUD_PROJECT: 'soluciones-cloud-202402'
       GCLOUD_BUCKET: 'soluciones-cloud-202402-videos2'
       GOOGLE_APPLICATION_CREDENTIALS: './soluciones-cloud-202402-77732d25e1e5.json'
-      NAME_SUB: 'videos-sub'
       QUEUE_CLOUD_PROVIDER: 'true'
+      NAME_SUB: 'videos-sub'
     command: bash -c "chmod +x /wait && /wait && echo 'Starting worker videos' && python init_bd.py && python process.py"
 
   api:
