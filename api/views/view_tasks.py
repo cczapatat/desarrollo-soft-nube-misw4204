@@ -11,6 +11,7 @@ from utils.jwt_util import get_user_id
 from utils.storage import upload_file
 from werkzeug.utils import secure_filename
 import tempfile
+from utils.publisher import publish_messages_data
 
 video_ext = os.environ.get('IN_EXT_VIDEOS', 'mp4')
 
@@ -33,11 +34,13 @@ task_schema = TaskSchema()
 host = os.environ.get('HOST_QUEUE', 'localhost')
 port = os.environ.get('PORT_QUEUE', 61613)
 hosts = [(host, port)]
-name_queue = os.environ.get('NAME_QUEUE', 'worker')
+name_queue = os.environ.get('NAME_QUEUE', 'videos')
 user_queue = os.environ.get('USER_QUEUE', 'admin')
 password_queue = os.environ.get('PWD_QUEUE', 'admin')
 date_queue = datetime.now().strftime("%Y%m%d%H%M%S%f")
 cliente_queue = 'api{}{}'.format(faker.unique.iban(), date_queue)
+project_id = os.environ.get('GCLOUD_PROJECT')
+queue_cloud_provider = os.environ.get('QUEUE_CLOUD_PROVIDER')
 
 def get_file_path(filename):
     file_name = secure_filename(filename)
@@ -74,16 +77,17 @@ class ConnectionListener(stomp.ConnectionListener):
         print('[Queue] Queue disconnected')
         stomp_connect(self._conn)
 
-
-conn = stomp.Connection(host_and_ports=hosts)
-conn.set_listener('list', ConnectionListener(conn))
+if queue_cloud_provider == 'false':
+    conn = stomp.Connection(host_and_ports=hosts)
+    conn.set_listener('list', ConnectionListener(conn))
 
 
 class ViewTasks(Resource):
 
 
     def __init__(self):
-        stomp_connect(conn)
+        if queue_cloud_provider == 'false':
+            stomp_connect(conn)
 
     @staticmethod
     def post():
@@ -138,8 +142,13 @@ class ViewTasks(Resource):
             db.session.add(task)
             db.session.commit()
 
-            # Send task to queue
-            stomp_send({'id': task.id, 'path_origin': task.path_origin, 'path_origin_gs': path2})
+            if queue_cloud_provider == 'false':
+                # Send task to queue
+                stomp_send({'id': task.id, 'path_origin': task.path_origin, 'path_origin_gs': path2})
+            else:
+                # Send task to pub/sub
+                data = {'id': task.id, 'path_origin': task.path_origin, 'path_origin_gs': path2}
+                publish_messages_data(project_id, name_queue, str(data))
 
             return {
                 'id': task.id,
