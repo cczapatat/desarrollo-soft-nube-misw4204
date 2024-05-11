@@ -39,7 +39,6 @@ def get_file_path(filename):
 
 
 def process_video(path):
-    gc.collect()
     if not os.path.exists('/backend/videos/gs/ins'):
         os.makedirs('/backend/videos/gs/ins')
     download_blob(path, '/backend/videos/gs/' + path)

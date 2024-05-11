@@ -3,16 +3,13 @@ import gc
 import json
 import datetime
 from typing import Union
+from google.cloud import pubsub_v1
 from models.task import Task, Status
 from models.declarative_base import session
-from google.cloud import pubsub_v1
 from utils.video_util import process_video
 
 project_id = os.environ.get('GCLOUD_PROJECT')
 subscription_id = os.environ.get('NAME_SUB', 'videos-sub')
-
-subscriber = pubsub_v1.SubscriberClient()
-subscription_path = subscriber.subscription_path(project_id, subscription_id)
 
 
 def __update_task__(task_id, status: Status, path_processed: Union[str, None]) -> bool:
@@ -50,8 +47,8 @@ def __process_and_update__(task_id, path_origin) -> Union[Task, bool]:
 
 
 def process(message):
-    gc.collect()
     print(f"Received on pubSub: {message}")
+    gc.collect()
     try:
         msn = (str(message.data)
                .replace('b"', '')
@@ -71,6 +68,7 @@ def process(message):
             return
 
         __process_and_update__(task_id, path_origin)
+        print('[Process] task_id {} ended'.format(str(task_id)))
     except Exception as ex:
         print(f"Error Generate during PubSub, ${str(ex)}")
 
@@ -79,14 +77,23 @@ def process(message):
 
 
 if __name__ == '__main__':
-    subscriber.subscribe(
+    subscriber = pubsub_v1.SubscriberClient()
+    subscription_path = subscriber.subscription_path(project_id, subscription_id)
+
+    flow_control = pubsub_v1.types.FlowControl(max_messages=1)
+
+    streaming_pull_future = subscriber.subscribe(
         subscription_path,
         callback=process,
-        await_callbacks_on_shutdown=True,
+        flow_control=flow_control,
     )
 
-    try:
-        while True:
-            pass
-    except:
-        print("Fail Pub Sub")
+    print(f"Process_Listening for messages on {subscription_path}..\n")
+
+    with subscriber:
+        try:
+            streaming_pull_future.result()
+        except Exception as ex:
+            print(f"Listening generated an error: {str(ex)}")
+            streaming_pull_future.cancel()
+            streaming_pull_future.result()
