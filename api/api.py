@@ -25,6 +25,8 @@ def create_flask_app():
     _app.config['PROPAGATE_EXCEPTIONS'] = True
     _app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{user}:{password}@{host}:{port}/{database_name}'
     _app.config['JWT_SECRET_KEY'] = 'frase-secreta'
+    _app.config['SQLALCHEMY_POOL_SIZE'] = 20
+    _app.config['SQLALCHEMY_MAX_OVERFLOW'] = 0
     app_context = _app.app_context()
     app_context.push()
     add_urls(_app)
