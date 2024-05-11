@@ -1,0 +1,217 @@
+2024-05-11 14:38:20,706 INFO o.a.j.u.JMeterUtils: Setting Locale to en
+2024-05-11 14:38:20,748 INFO o.a.j.JMeter: Loading user properties from: /home/ubuntu/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/bin/user.properties
+2024-05-11 14:38:20,749 INFO o.a.j.JMeter: Loading system properties from: /home/ubuntu/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/bin/system.properties
+2024-05-11 14:38:20,769 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2024-05-11 14:38:20,770 INFO o.a.j.JMeter: Version 5.6.3
+2024-05-11 14:38:20,770 INFO o.a.j.JMeter: java.version=21.0.2
+2024-05-11 14:38:20,770 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2024-05-11 14:38:20,770 INFO o.a.j.JMeter: os.name=Linux
+2024-05-11 14:38:20,770 INFO o.a.j.JMeter: os.arch=amd64
+2024-05-11 14:38:20,770 INFO o.a.j.JMeter: os.version=6.5.0-1018-aws
+2024-05-11 14:38:20,770 INFO o.a.j.JMeter: file.encoding=UTF-8
+2024-05-11 14:38:20,770 INFO o.a.j.JMeter: java.awt.headless=true
+2024-05-11 14:38:20,770 INFO o.a.j.JMeter: Max memory     =1013645312
+2024-05-11 14:38:20,770 INFO o.a.j.JMeter: Available Processors =1
+2024-05-11 14:38:20,788 INFO o.a.j.JMeter: Default Locale=English
+2024-05-11 14:38:20,789 INFO o.a.j.JMeter: JMeter  Locale=English
+2024-05-11 14:38:20,793 INFO o.a.j.JMeter: JMeterHome=/home/ubuntu/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3
+2024-05-11 14:38:20,793 INFO o.a.j.JMeter: user.dir  =/home/ubuntu/desarrollo-soft-nube-misw4204/jmeter
+2024-05-11 14:38:20,793 INFO o.a.j.JMeter: PWD       =/home/ubuntu/desarrollo-soft-nube-misw4204/jmeter
+2024-05-11 14:38:20,796 INFO o.a.j.JMeter: IP: 172.31.18.146 Name: ip-172-31-18-146 FullName: ip-172-31-18-146.ec2.internal
+2024-05-11 14:38:20,831 INFO o.a.j.s.FileServer: Default base='/home/ubuntu/desarrollo-soft-nube-misw4204/jmeter'
+2024-05-11 14:38:20,841 INFO o.a.j.s.FileServer: Set new base='/home/ubuntu/desarrollo-soft-nube-misw4204/jmeter'
+2024-05-11 14:38:21,414 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2024-05-11 14:38:21,497 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2024-05-11 14:38:21,510 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2024-05-11 14:38:21,521 INFO o.a.j.s.SaveService: Loading file: save_task_v2.jmx
+2024-05-11 14:38:21,648 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2024-05-11 14:38:21,649 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2024-05-11 14:38:21,653 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2024-05-11 14:38:21,653 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2024-05-11 14:38:21,653 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2024-05-11 14:38:21,653 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2024-05-11 14:38:22,326 INFO o.a.j.JMeter: Creating summariser <summary>
+2024-05-11 14:38:22,365 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2024-05-11 14:38:22,367 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2024-05-11 14:38:22,367 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2024-05-11 14:38:22,378 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2024-05-11 14:38:22,378 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2024-05-11 14:38:22,571 INFO o.a.j.r.ClassFinder: Will scan jar /home/ubuntu/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/jmeter-plugins-graphs-basic-2.0.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.functions.Function], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
+2024-05-11 14:38:22,585 INFO o.a.j.r.ClassFinder: Will scan jar /home/ubuntu/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/jmeter-plugins-manager-0.20.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.functions.Function], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
+2024-05-11 14:38:22,745 INFO o.a.j.r.ClassFinder: Will scan jar /home/ubuntu/desarrollo-soft-nube-misw4204/jmeter/apache-jmeter-5.6.3/lib/ext/virtual-thread-group-plugin-1.0-SNAPSHOT.jar with filter ExtendsClassFilter [parents=[interface org.apache.jmeter.functions.Function], inner=false, contains=null, notContains=null]. Consider exposing JMeter plugins via META-INF/services, and add JMeter-Skip-Class-Scanning=true manifest attribute so JMeter can skip classfile scanning
+2024-05-11 14:38:22,773 INFO o.a.j.JMeter: Running test (1715438302773)
+2024-05-11 14:38:22,818 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : Virtual Thread Group
+2024-05-11 14:38:22,819 INFO o.a.j.e.StandardJMeterEngine: Starting 50 threads for group Virtual Thread Group.
+2024-05-11 14:38:22,819 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2024-05-11 14:38:22,819 INFO c.e.j.p.CustomThreadGroup: Starting thread group... number=1 threads=50 ramp-up=120 delayedStart=false
+2024-05-11 14:38:22,895 INFO c.e.j.p.CustomThreadGroup: Started thread group number 1
+2024-05-11 14:38:22,895 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2024-05-11 14:38:22,960 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-1
+2024-05-11 14:38:22,962 INFO o.a.j.s.FileServer: Stored: /home/ubuntu/desarrollo-soft-nube-misw4204/jmeter/users_id.csv
+2024-05-11 14:38:23,055 INFO o.a.j.p.h.s.HTTPHCAbstractImpl: Local host = ip-172-31-18-146
+2024-05-11 14:38:23,068 INFO o.a.j.p.h.s.HTTPHC4Impl: HTTP request retry count = 0
+2024-05-11 14:38:23,071 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2024-05-11 14:38:23,071 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to UTF-8
+2024-05-11 14:38:23,072 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2024-05-11 14:38:23,072 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2024-05-11 14:38:23,223 INFO o.a.j.s.FileServer: Stored: /home/ubuntu/desarrollo-soft-nube-misw4204/videos/ins/example.mp4
+2024-05-11 14:38:23,941 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-1
+2024-05-11 14:38:23,941 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-1
+2024-05-11 14:38:25,372 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-2
+2024-05-11 14:38:25,798 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-2
+2024-05-11 14:38:25,798 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-2
+2024-05-11 14:38:27,770 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-3
+2024-05-11 14:38:28,158 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-3
+2024-05-11 14:38:28,158 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-3
+2024-05-11 14:38:30,171 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-4
+2024-05-11 14:38:30,603 INFO o.a.j.r.Summariser: summary +      4 in 00:00:08 =    0.5/s Avg:   487 Min:   380 Max:   719 Err:     0 (0.00%) Active: 1 Started: 4 Finished: 3
+2024-05-11 14:38:30,604 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-4
+2024-05-11 14:38:30,605 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-4
+2024-05-11 14:38:32,569 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-5
+2024-05-11 14:38:32,978 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-5
+2024-05-11 14:38:32,979 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-5
+2024-05-11 14:38:34,966 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-6
+2024-05-11 14:38:35,354 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-6
+2024-05-11 14:38:35,354 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-6
+2024-05-11 14:38:37,367 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-7
+2024-05-11 14:38:37,815 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-7
+2024-05-11 14:38:37,815 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-7
+2024-05-11 14:38:39,765 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-8
+2024-05-11 14:38:40,210 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-8
+2024-05-11 14:38:40,211 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-8
+2024-05-11 14:38:42,165 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-9
+2024-05-11 14:38:42,564 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-9
+2024-05-11 14:38:42,564 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-9
+2024-05-11 14:38:44,565 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-10
+2024-05-11 14:38:45,020 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-10
+2024-05-11 14:38:45,022 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-10
+2024-05-11 14:38:46,965 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-11
+2024-05-11 14:38:47,374 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-11
+2024-05-11 14:38:47,375 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-11
+2024-05-11 14:38:49,364 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-12
+2024-05-11 14:38:49,768 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-12
+2024-05-11 14:38:49,769 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-12
+2024-05-11 14:38:51,737 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-13
+2024-05-11 14:38:52,153 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-13
+2024-05-11 14:38:52,154 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-13
+2024-05-11 14:38:54,140 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-14
+2024-05-11 14:38:54,578 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-14
+2024-05-11 14:38:54,578 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-14
+2024-05-11 14:38:56,544 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-15
+2024-05-11 14:38:56,945 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-15
+2024-05-11 14:38:56,946 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-15
+2024-05-11 14:38:58,945 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-16
+2024-05-11 14:38:59,353 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-16
+2024-05-11 14:38:59,353 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-16
+2024-05-11 14:39:01,337 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-17
+2024-05-11 14:39:01,725 INFO o.a.j.r.Summariser: summary +     13 in 00:00:31 =    0.4/s Avg:   410 Min:   383 Max:   450 Err:     0 (0.00%) Active: 1 Started: 17 Finished: 16
+2024-05-11 14:39:01,727 INFO o.a.j.r.Summariser: summary =     17 in 00:00:39 =    0.4/s Avg:   428 Min:   380 Max:   719 Err:     0 (0.00%)
+2024-05-11 14:39:01,727 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-17
+2024-05-11 14:39:01,728 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-17
+2024-05-11 14:39:03,728 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-18
+2024-05-11 14:39:04,110 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-18
+2024-05-11 14:39:04,110 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-18
+2024-05-11 14:39:06,128 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-19
+2024-05-11 14:39:06,583 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-19
+2024-05-11 14:39:06,583 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-19
+2024-05-11 14:39:08,527 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-20
+2024-05-11 14:39:08,925 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-20
+2024-05-11 14:39:08,925 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-20
+2024-05-11 14:39:10,928 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-21
+2024-05-11 14:39:11,332 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-21
+2024-05-11 14:39:11,333 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-21
+2024-05-11 14:39:13,327 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-22
+2024-05-11 14:39:13,715 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-22
+2024-05-11 14:39:13,717 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-22
+2024-05-11 14:39:15,728 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-23
+2024-05-11 14:39:16,210 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-23
+2024-05-11 14:39:16,212 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-23
+2024-05-11 14:39:18,127 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-24
+2024-05-11 14:39:18,544 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-24
+2024-05-11 14:39:18,544 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-24
+2024-05-11 14:39:20,528 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-25
+2024-05-11 14:39:20,988 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-25
+2024-05-11 14:39:20,988 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-25
+2024-05-11 14:39:22,927 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-26
+2024-05-11 14:39:23,384 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-26
+2024-05-11 14:39:23,384 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-26
+2024-05-11 14:39:25,326 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-27
+2024-05-11 14:39:25,723 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-27
+2024-05-11 14:39:25,723 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-27
+2024-05-11 14:39:27,727 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-28
+2024-05-11 14:39:28,109 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-28
+2024-05-11 14:39:28,109 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-28
+2024-05-11 14:39:30,128 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-29
+2024-05-11 14:39:30,567 INFO o.a.j.r.Summariser: summary +     12 in 00:00:29 =    0.4/s Avg:   417 Min:   378 Max:   480 Err:     0 (0.00%) Active: 1 Started: 29 Finished: 28
+2024-05-11 14:39:30,569 INFO o.a.j.r.Summariser: summary =     29 in 00:01:08 =    0.4/s Avg:   424 Min:   378 Max:   719 Err:     0 (0.00%)
+2024-05-11 14:39:30,569 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-29
+2024-05-11 14:39:30,569 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-29
+2024-05-11 14:39:32,526 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-30
+2024-05-11 14:39:32,935 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-30
+2024-05-11 14:39:32,935 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-30
+2024-05-11 14:39:34,916 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-31
+2024-05-11 14:39:35,300 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-31
+2024-05-11 14:39:35,301 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-31
+2024-05-11 14:39:37,314 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-32
+2024-05-11 14:39:37,715 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-32
+2024-05-11 14:39:37,716 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-32
+2024-05-11 14:39:39,715 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-33
+2024-05-11 14:39:40,326 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-33
+2024-05-11 14:39:40,326 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-33
+2024-05-11 14:39:42,116 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-34
+2024-05-11 14:39:42,545 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-34
+2024-05-11 14:39:42,546 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-34
+2024-05-11 14:39:44,516 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-35
+2024-05-11 14:39:44,917 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-35
+2024-05-11 14:39:44,918 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-35
+2024-05-11 14:39:46,918 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-36
+2024-05-11 14:39:47,284 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-36
+2024-05-11 14:39:47,284 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-36
+2024-05-11 14:39:49,320 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-37
+2024-05-11 14:39:49,739 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-37
+2024-05-11 14:39:49,740 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-37
+2024-05-11 14:39:51,720 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-38
+2024-05-11 14:39:52,187 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-38
+2024-05-11 14:39:52,188 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-38
+2024-05-11 14:39:54,120 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-39
+2024-05-11 14:39:54,527 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-39
+2024-05-11 14:39:54,528 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-39
+2024-05-11 14:39:56,523 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-40
+2024-05-11 14:39:56,965 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-40
+2024-05-11 14:39:56,965 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-40
+2024-05-11 14:39:58,925 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-41
+2024-05-11 14:39:59,308 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-41
+2024-05-11 14:39:59,309 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-41
+2024-05-11 14:40:01,325 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-42
+2024-05-11 14:40:01,719 INFO o.a.j.r.Summariser: summary +     13 in 00:00:31 =    0.4/s Avg:   420 Min:   363 Max:   608 Err:     0 (0.00%) Active: 1 Started: 42 Finished: 41
+2024-05-11 14:40:01,720 INFO o.a.j.r.Summariser: summary =     42 in 00:01:39 =    0.4/s Avg:   422 Min:   363 Max:   719 Err:     0 (0.00%)
+2024-05-11 14:40:01,721 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-42
+2024-05-11 14:40:01,721 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-42
+2024-05-11 14:40:03,725 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-43
+2024-05-11 14:40:04,134 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-43
+2024-05-11 14:40:04,134 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-43
+2024-05-11 14:40:06,124 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-44
+2024-05-11 14:40:06,506 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-44
+2024-05-11 14:40:06,506 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-44
+2024-05-11 14:40:08,526 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-45
+2024-05-11 14:40:08,884 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-45
+2024-05-11 14:40:08,884 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-45
+2024-05-11 14:40:10,924 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-46
+2024-05-11 14:40:11,393 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-46
+2024-05-11 14:40:11,394 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-46
+2024-05-11 14:40:13,307 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-47
+2024-05-11 14:40:13,722 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-47
+2024-05-11 14:40:13,722 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-47
+2024-05-11 14:40:15,707 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-48
+2024-05-11 14:40:16,436 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-48
+2024-05-11 14:40:16,438 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-48
+2024-05-11 14:40:18,108 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-49
+2024-05-11 14:40:18,564 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-49
+2024-05-11 14:40:18,564 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-49
+2024-05-11 14:40:20,508 INFO o.a.j.t.JMeterThread: Thread started: Virtual Thread Group 1-50
+2024-05-11 14:40:20,917 INFO o.a.j.t.JMeterThread: Thread is done: Virtual Thread Group 1-50
+2024-05-11 14:40:20,917 INFO o.a.j.t.JMeterThread: Thread finished: Virtual Thread Group 1-50
+2024-05-11 14:40:20,917 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2024-05-11 14:40:20,918 INFO o.a.j.s.FileServer: Close: /home/ubuntu/desarrollo-soft-nube-misw4204/jmeter/users_id.csv
+2024-05-11 14:40:20,918 INFO o.a.j.r.Summariser: summary +      8 in 00:00:19 =    0.4/s Avg:   449 Min:   355 Max:   725 Err:     0 (0.00%) Active: 0 Started: 50 Finished: 50
+2024-05-11 14:40:20,919 INFO o.a.j.r.Summariser: summary =     50 in 00:01:58 =    0.4/s Avg:   427 Min:   355 Max:   725 Err:     0 (0.00%)
