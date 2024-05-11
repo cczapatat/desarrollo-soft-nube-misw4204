@@ -26,7 +26,9 @@ def callback(message: pubsub_v1.subscriber.message.Message, process) -> None:
 
 
 def run_pubsub(process):
-    subscriber.subscribe(subscription_path, callback=lambda message: callback(message, process))
+    subscriber.subscribe(subscription_path,
+                         callback=lambda message: callback(message, process),
+                         await_callbacks_on_shutdown=True)
     print(f"Listening for messages on {subscription_path}..\n")
 
     try:
