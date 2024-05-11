@@ -1,7 +1,8 @@
 import os
+import tempfile
+import stomp
 from datetime import datetime
 from faker import Faker
-import stomp
 from models.models import Task, Status, User, TaskSchema
 from models.models import db
 from flask_jwt_extended import get_jwt_identity, jwt_required
@@ -10,8 +11,7 @@ from flask_restful import Resource
 from utils.jwt_util import get_user_id
 from utils.storage import upload_file
 from werkzeug.utils import secure_filename
-import tempfile
-from utils.publisher import publish_messages_data
+from google.cloud import pubsub_v1
 
 video_ext = os.environ.get('IN_EXT_VIDEOS', 'mp4')
 
@@ -40,10 +40,15 @@ password_queue = os.environ.get('PWD_QUEUE', 'admin')
 date_queue = datetime.now().strftime("%Y%m%d%H%M%S%f")
 cliente_queue = 'api{}{}'.format(faker.unique.iban(), date_queue)
 queue_cloud_provider = os.environ.get('QUEUE_CLOUD_PROVIDER')
+project_id = os.environ.get('GCLOUD_PROJECT')
+publisher = pubsub_v1.PublisherClient()
+topic_path = publisher.topic_path(project_id, name_queue)
+
 
 def get_file_path(filename):
     file_name = secure_filename(filename)
     return os.path.join(tempfile.gettempdir(), file_name)
+
 
 def stomp_connect(_conn):
     if not _conn.is_connected():
@@ -76,13 +81,20 @@ class ConnectionListener(stomp.ConnectionListener):
         print('[Queue] Queue disconnected')
         stomp_connect(self._conn)
 
+
 if queue_cloud_provider == 'false':
     conn = stomp.Connection(host_and_ports=hosts)
     conn.set_listener('list', ConnectionListener(conn))
 
 
-class ViewTasks(Resource):
+def publish_messages_data(message: str) -> None:
+    future = publisher.publish(topic_path, message.encode("utf-8"))
+    print(future.result())
 
+    print(f"Published messages to {topic_path}.")
+
+
+class ViewTasks(Resource):
 
     def __init__(self):
         if queue_cloud_provider == 'false':
@@ -160,7 +172,6 @@ class ViewTasks(Resource):
                 'result': {'error': str(ex), 'details': {}, 'status': 'Error'},
             }, 400
 
-
     @jwt_required()
     def get(self):
         user_id = get_jwt_identity()
@@ -183,10 +194,10 @@ class ViewTasks(Resource):
 
         if order_by is not None:
             if order_by == '0':
-                #order by desc if filter equals to 0
+                # order by desc if filter equals to 0
                 tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.id.desc()).all()
             elif order_by == '1':
-                #order by asc if filter equals to 1
+                # order by asc if filter equals to 1
                 tasks = Task.query.filter(Task.user_id == user_id).order_by(Task.id.asc()).all()
 
         if max_tasks is None and order_by is None:
@@ -194,5 +205,5 @@ class ViewTasks(Resource):
 
         data_response = task_schema.dump(tasks, many=True)
 
-        #return tasks as dictionary in json
+        # return tasks as dictionary in json
         return data_response, 200
