@@ -1,5 +1,4 @@
 import os
-import gc
 from datetime import datetime
 from faker import Faker
 import stomp
@@ -40,7 +39,6 @@ user_queue = os.environ.get('USER_QUEUE', 'admin')
 password_queue = os.environ.get('PWD_QUEUE', 'admin')
 date_queue = datetime.now().strftime("%Y%m%d%H%M%S%f")
 cliente_queue = 'api{}{}'.format(faker.unique.iban(), date_queue)
-project_id = os.environ.get('GCLOUD_PROJECT')
 queue_cloud_provider = os.environ.get('QUEUE_CLOUD_PROVIDER')
 
 def get_file_path(filename):
@@ -135,14 +133,12 @@ class ViewTasks(Resource):
             if os.path.exists(file_path):
                 os.remove(file_path)
 
-            gc.collect()
             print('[NewTask] saved userId: {}, fileOriginName: {}'.format(user_id, filename_origin))
 
             # save task
             task = Task(user_id=int(user_id), file_name=filename_origin, path_origin=path2, status=Status.UPLOADED)
             db.session.add(task)
             db.session.commit()
-            db.session.close()
 
             if queue_cloud_provider == 'false':
                 # Send task to queue
@@ -150,7 +146,7 @@ class ViewTasks(Resource):
             else:
                 # Send task to pub/sub
                 data = {'id': task.id, 'path_origin': task.path_origin, 'path_origin_gs': path2}
-                publish_messages_data(project_id, name_queue, str(data))
+                publish_messages_data(str(data))
 
             return {
                 'id': task.id,
