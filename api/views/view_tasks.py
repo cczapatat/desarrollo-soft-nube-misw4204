@@ -1,4 +1,5 @@
 import os
+import gc
 from datetime import datetime
 from faker import Faker
 import stomp
@@ -108,7 +109,6 @@ class ViewTasks(Resource):
             }, 400
 
         file = request.files['file']
-        files = request.files.to_dict()
 
         # Check if the file is empty
         if file.filename == '':
@@ -135,12 +135,14 @@ class ViewTasks(Resource):
             if os.path.exists(file_path):
                 os.remove(file_path)
 
+            gc.collect()
             print('[NewTask] saved userId: {}, fileOriginName: {}'.format(user_id, filename_origin))
 
             # save task
             task = Task(user_id=int(user_id), file_name=filename_origin, path_origin=path2, status=Status.UPLOADED)
             db.session.add(task)
             db.session.commit()
+            db.session.close()
 
             if queue_cloud_provider == 'false':
                 # Send task to queue
