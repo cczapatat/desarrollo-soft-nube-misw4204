@@ -1,6 +1,5 @@
 import os
 import tempfile
-import stomp
 from datetime import datetime
 from faker import Faker
 from models.models import Task, Status, User, TaskSchema
@@ -50,43 +49,6 @@ def get_file_path(filename):
     return os.path.join(tempfile.gettempdir(), file_name)
 
 
-def stomp_connect(_conn):
-    if not _conn.is_connected():
-        _conn.connect(user_queue, password_queue, wait=True, headers={'client-id': cliente_queue})
-        print('[Queue] New Connection')
-    else:
-        print('[Queue] Ready connection')
-
-
-def stomp_send(body):
-    print('[Queue] STARTING ENQUEUEING TO {0}'.format(name_queue))
-    conn.send(
-        body=str(body),
-        destination='/queue/{0}'.format(name_queue),
-        persistent=True,
-        headers={'persistent': "true"},
-    )
-    print('[Queue] Send new task')
-
-
-class ConnectionListener(stomp.ConnectionListener):
-    def __init__(self, _conn):
-        self._conn = _conn
-
-    @staticmethod
-    def on_error(message):
-        print('[Queue] received an error "%s"' % message)
-
-    def on_disconnected(self):
-        print('[Queue] Queue disconnected')
-        stomp_connect(self._conn)
-
-
-if queue_cloud_provider == 'false':
-    conn = stomp.Connection(host_and_ports=hosts)
-    conn.set_listener('list', ConnectionListener(conn))
-
-
 def publish_messages_data(message: str) -> None:
     future = publisher.publish(topic_path, message.encode("utf-8"))
     print(future.result())
@@ -96,9 +58,6 @@ def publish_messages_data(message: str) -> None:
 
 class ViewTasks(Resource):
 
-    def __init__(self):
-        if queue_cloud_provider == 'false':
-            stomp_connect(conn)
 
     @staticmethod
     def post():
@@ -152,13 +111,9 @@ class ViewTasks(Resource):
             db.session.add(task)
             db.session.commit()
 
-            if queue_cloud_provider == 'false':
-                # Send task to queue
-                stomp_send({'id': task.id, 'path_origin': task.path_origin, 'path_origin_gs': path2})
-            else:
-                # Send task to pub/sub
-                data = {'id': task.id, 'path_origin': task.path_origin, 'path_origin_gs': path2}
-                publish_messages_data(str(data))
+            data = {'id': task.id, 'path_origin': task.path_origin, 'path_origin_gs': path2}
+            publish_messages_data(str(data))
+
 
             return {
                 'id': task.id,
