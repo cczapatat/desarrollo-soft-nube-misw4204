@@ -29,20 +29,22 @@ else:
 
 faker = Faker()
 
+
 # Helper function that computes the filepath to save files to
 def get_file_path(filename):
     # Note: tempfile.gettempdir() points to an in-memory file system
     # on GCF. Thus, any files in it must fit in the instance's memory.
     file_name = secure_filename(filename)
     return os.path.join(tempfile.gettempdir(), file_name)
+
+
 def process_video(path):
     gc.collect()
     if not os.path.exists('/backend/videos/gs/ins'):
         os.makedirs('/backend/videos/gs/ins')
-    download_blob(path, '/backend/videos/gs/'+path)
+    download_blob(path, '/backend/videos/gs/' + path)
 
-    video = get_video_buffer('/backend/videos/gs/'+path)
-
+    video = get_video_buffer('/backend/videos/gs/' + path)
 
     if type(video) is str:
         return {"end": False, "status": "error", "message": video}
@@ -67,7 +69,8 @@ def process_video(path):
 
     response_save = save_new_video(video)
 
-    os.remove('/backend/videos/gs/' + path)
+    if os.path.exists('/backend/videos/gs/' + path):
+        os.remove('/backend/videos/gs/' + path)
     gc.collect()
 
     if type(response_save) is str:

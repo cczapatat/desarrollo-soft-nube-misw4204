@@ -12,12 +12,16 @@ subscription_path = subscriber.subscription_path(project_id, subscription_id)
 def callback(message: pubsub_v1.subscriber.message.Message, process) -> None:
     print(f"Received on pubSub: {message}")
 
-    msn = (str(message.data)
-           .replace('b"', '')
-           .replace('"', '')
-           .replace("'", '"'))
-    body_parsed = json.loads(msn)
-    process(body_parsed)
+    try:
+        msn = (str(message.data)
+               .replace('b"', '')
+               .replace('"', '')
+               .replace("'", '"'))
+        body_parsed = json.loads(msn)
+        process(body_parsed)
+    except Exception as ex:
+        print(f"Error Generate during PubSub, ${str(ex)}")
+
     message.ack()
 
 
