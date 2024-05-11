@@ -1,15 +1,18 @@
 import os
 import gc
+import json
 import datetime
 from typing import Union
 from models.task import Task, Status
 from models.declarative_base import session
+from google.cloud import pubsub_v1
 from utils.video_util import process_video
 
-if os.environ.get('QUEUE_CLOUD_PROVIDER', 'true') == 'true':
-    from pubsub import run_pubsub
-else:
-    from worker import run_worker
+project_id = os.environ.get('GCLOUD_PROJECT')
+subscription_id = os.environ.get('NAME_SUB', 'videos-sub')
+
+subscriber = pubsub_v1.SubscriberClient()
+subscription_path = subscriber.subscription_path(project_id, subscription_id)
 
 
 def __update_task__(task_id, status: Status, path_processed: Union[str, None]) -> bool:
@@ -46,26 +49,44 @@ def __process_and_update__(task_id, path_origin) -> Union[Task, bool]:
     return task_updated
 
 
-def process(input_data):
+def process(message):
     gc.collect()
-    print('[Process] New event: {}'.format(str(input_data)))
-    task_id = input_data["id"]
-    path_origin = input_data["path_origin"]
+    print(f"Received on pubSub: {message}")
+    try:
+        msn = (str(message.data)
+               .replace('b"', '')
+               .replace('"', '')
+               .replace("'", '"'))
+        input_data = json.loads(msn)
+        print('[Process] New event: {}'.format(str(input_data)))
+        task_id = input_data["id"]
+        path_origin = input_data["path_origin"]
 
-    if task_id is None or type(task_id) is not int:
-        print('[Process] event is incorrect, input: {}'.format(str(input_data)))
-        return
+        if task_id is None or type(task_id) is not int:
+            print('[Process] event is incorrect, input: {}'.format(str(input_data)))
+            return
 
-    if path_origin is None:
-        print('[Process] path_origin {} is not exists'.format(str(task_id)))
-        return
+        if path_origin is None:
+            print('[Process] path_origin {} is not exists'.format(str(task_id)))
+            return
 
-    __process_and_update__(task_id, path_origin)
+        __process_and_update__(task_id, path_origin)
+    except Exception as ex:
+        print(f"Error Generate during PubSub, ${str(ex)}")
+
+    message.ack()
     gc.collect()
 
 
 if __name__ == '__main__':
-    if os.environ.get('QUEUE_CLOUD_PROVIDER', 'true') == 'true':
-        run_pubsub(process)
-    else:
-        run_worker(process)
+    subscriber.subscribe(
+        subscription_path,
+        callback=process,
+        await_callbacks_on_shutdown=True,
+    )
+
+    try:
+        while True:
+            pass
+    except:
+        print("Fail Pub Sub")
