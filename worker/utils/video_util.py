@@ -91,17 +91,15 @@ def save_new_video(video):
         print('[VideoUtil][save_new_video] Path temp, {}'.format(path_temp))
         print('[VideoUtil][save_new_video] Path GS, {}'.format(path))
 
-        video.write_videofile(path_temp, logger=None, fps=30, threads=pcd_threads, preset='superfast')
+        video.write_videofile(path_temp, logger=None, fps=25, threads=pcd_threads, preset='ultrafast')
         print('[VideoUtil][save_new_video] video saved')
         video.close()
         del video
 
-        public_url = upload_file(
-            path_temp,
-            path
-        )
+        upload_file(path_temp, path)
         print("[VideoUtil][save_new_video] Uploaded new video, {}".format(path))
-        os.remove(path_temp)
+        if os.path.exists(path_temp):
+            os.remove(path_temp)
         print('[VideoUtil][save_new_video] Finished new video, {}'.format(str(datetime.now())))
 
         return {"path_processed": path}
