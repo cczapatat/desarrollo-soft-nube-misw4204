@@ -72,16 +72,17 @@ def process():
 
         if task_id is None or type(task_id) is not int:
             print('[Process] event is incorrect, input: {}'.format(str(input_data)))
-            return
+            return "Bad Request: ", 400
 
         if path_origin is None:
             print('[Process] path_origin {} is not exists'.format(str(task_id)))
-            return
+            return "Bad Request: ", 400
 
         __process_and_update__(task_id, path_origin)
         print('[Process] task_id {} ended'.format(str(task_id)))
     except Exception as ex:
         print(f"Error Generate during PubSub, ${str(ex)}")
+        return f"Bad Request: {ex}", 400
 
     gc.collect()
     return 'ok', 200
