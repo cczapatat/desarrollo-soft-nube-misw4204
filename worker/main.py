@@ -84,6 +84,7 @@ def process():
         print(f"Error Generate during PubSub, ${str(ex)}")
 
     gc.collect()
+    return 'ok', 200
 
 
 if __name__ == '__main__':
