@@ -60,7 +60,10 @@ def process():
     print(f"Received on pubSub: {message}")
     gc.collect()
     try:
-        pubsub_message = message["message"]
+        msn = (str(message)
+               .replace("'", '"'))
+        input_msn = json.loads(msn)
+        pubsub_message = input_msn["message"]
         data = base64.b64decode(pubsub_message["data"]).decode('utf-8')
         input_data = json.loads(data)
         print('[Process] New event: {}'.format(str(input_data)))
@@ -80,7 +83,6 @@ def process():
     except Exception as ex:
         print(f"Error Generate during PubSub, ${str(ex)}")
 
-    message.ack()
     gc.collect()
 
 
