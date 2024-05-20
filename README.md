@@ -449,3 +449,89 @@ gcloud compute instance-templates create template-worker \
      echo -e "QUEUE_CLOUD_PROVIDER=true|false" | sudo tee -a .env-prd
      sudo docker-compose -f docker-compose-worker.yaml --env-file .env-prd up -d'
 ```
+
+## Despliegue en CloudRun (Serverless) - Entrega 5
+
+En este punto ya debe contar con una base de datos usando el servicio SQL, un bucket con las carpetas ins y out, y un topico creado en el servicio de PubSub ahora debemos actualizar los docker file para que la imagen se creen en el registry de forma correcta, ademas de instalar las dependencias de python para la elaboración de las imagenes. Para ello bajamos el repositorio desde la consola de cloud shell desde git hub.
+
+```
+git clone https://github.com/cczapatat/desarrollo-soft-nube-misw4204.git
+cd desarrollo-soft-nube-misw4204
+export $GOOGLE_CLOUD_PROJECT=$DEVSHELL_PROJECT_ID
+```
+Se procede con la instalación de python.
+```
+sudo apt-get install python3.9
+```
+Instalar librerias en cada componente de api y worker:
+```
+cd api
+pip3 install -r requirements.txt
+cd ..
+cd worker
+pip3 install -r requirements.txt
+cd ..
+```
+Eliminar los Dockerfiles anteriores y usar los de cloudrun
+```
+cd api
+rm Dockerfile
+mv Dockerfile.cloudrun Dockerfile
+cd ..
+cd worker
+rm Dockerfile
+mv Dockerfile.cloudrun Dockerfile
+cd ..
+```
+Habilitar api de cloud run
+```
+gcloud services enable run.googleapis.com
+```
+
+Adicionar permisos de sql
+```
+gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID     --member serviceAccount:cloud-storage-with-pre-signed@soluciones-cloud-202402.iam.gserviceaccount.com     --role roles/cloudsql.client
+gcloud projects add-iam-policy-binding $GOOGLE_CLOUD_PROJECT --member=serviceAccount:cloud-storage-with-pre-signed@soluciones-cloud-202402.iam.gserviceaccount.com --role=roles/iam.serviceAccountTokenCreator
+```
+
+Construir imagenes de api y worker
+```
+cd api
+gcloud builds submit   --tag gcr.io/$GOOGLE_CLOUD_PROJECT/rest-api:0.1
+cd ..
+cd worker
+gcloud builds submit  --tag gcr.io/$GOOGLE_CLOUD_PROJECT/rest-worker:0.1
+```
+
+Crear servicio de cloud run para api y worker una vez se cargen las imagenes 
+*Recuerde reemplazar los valores en <>*
+Para el api
+```
+gcloud run deploy rest-api-api \
+--image=<ID_GENERADA_IMAGEN_API> \
+--set-env-vars=HOST_PG=<IP_DB>--set-env-vars=USER_PG=<USER_DB>--set-env-vars=PWD_PG=<CLAVE_DB>--set-env-vars=API_KEY=ApiKeyTestLoadGp10--set-env-vars=QUEUE_CLOUD_PROVIDER=true--set-env-vars=GCLOUD_PROJECT=soluciones-cloud-202402--set-env-vars=GCLOUD_BUCKET=soluciones-cloud-202402-videos2--set-env-vars=NAME_SUB=videos-sub--set-env-vars=IN_GS_FILE_VIDEOS=ins--set-env-vars=DB_NAME_PG=videos--set-env-vars=PORT_PG=5432--set-env-vars='IN_FILE_VIDEOS=/videos/ins'--set-env-vars=IN_EXT_VIDEOS=mp4--set-env-vars=PYTHONUNBUFFERED=1 \
+--set-cloudsql-instances=soluciones-cloud-202402:us-central1:instancia-db \
+--region=us-central1 \
+--project=soluciones-cloud-202402 \
+ && gcloud run services update-traffic rest-api-api --to-latest
+```
+*Recuerde reemplazar los valores en <>*
+Para el worker
+```
+gcloud run deploy rest-worker \
+--image=<ID_GENERADA_IMAGEN_WORKER> \
+--set-env-vars=HOST_PG=<IP_DB>--set-env-vars=USER_PG=<USER_DB>--set-env-vars=API_KEY=ApiKeyTestLoadGp10--set-env-vars=TOTAL_THREADS=2--set-env-vars=PWD_PG=<CLAVE_DB>--set-env-vars=QUEUE_CLOUD_PROVIDER=true--set-env-vars=PYTHONUNBUFFERED=1--set-env-vars=OUT_EXT_VIDEOS=mp4--set-env-vars=MAX_DIRECTION_VIDEOS=20--set-env-vars='OUT_FILE_VIDEOS=/videos/outs'--set-env-vars=PORT_PG=5432--set-env-vars=DB_NAME_PG=videos--set-env-vars=OUT_GS_FILE_VIDEOS=outs--set-env-vars=GCLOUD_PROJECT=soluciones-cloud-202402--set-env-vars=GCLOUD_BUCKET=soluciones-cloud-202402-videos2--set-env-vars=NAME_SUB=videos-sub \
+--set-cloudsql-instances=soluciones-cloud-202402:us-central1:instancia-db \
+--region=us-central1 \
+--project=soluciones-cloud-202402 \
+ && gcloud run services update-traffic rest-worker --to-latest
+```
+
+Enlazar el worker al pubsub de forma push
+```
+WORKER_SERVICE_URL=$(gcloud run services describe rest-worker --platform managed --region "us-central1" --format="value(status.address.url)")
+gcloud pubsub subscriptions create rest-worker-sub --topic videos --push-endpoint=$WORKER_SERVICE_URL --push-auth-service-account=cloud-storage-with-pre-signed@soluciones-cloud-202402.iam.gserviceaccount.com
+```
+
+
+**Apagar**
