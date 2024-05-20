@@ -1,0 +1,7 @@
+FROM python:3.9.6
+RUN mkdir /backend
+WORKDIR /backend
+ADD . /backend/
+ADD requirements.txt /backend/
+RUN pip install -r requirements.txt
+CMD python init_bd.py && python main.py

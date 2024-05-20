@@ -16,7 +16,7 @@ app = Flask(__name__)
 
 
 @app.route("/")
-def get(self):
+def get():
     return 'ok', 200
 
 
@@ -62,10 +62,9 @@ def process():
     try:
         msn = (str(message)
                .replace("'", '"'))
-        input_msn = json.loads(msn)
-        pubsub_message = input_msn["message"]
+        pubsub_message = message["message"]
         data = base64.b64decode(pubsub_message["data"]).decode('utf-8')
-        input_data = json.loads(data)
+        input_data = json.loads((str(data).replace("'", '"')))
         print('[Process] New event: {}'.format(str(input_data)))
         task_id = input_data["id"]
         path_origin = input_data["path_origin"]
