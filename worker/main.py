@@ -79,12 +79,12 @@ def process():
 
         __process_and_update__(task_id, path_origin)
         print('[Process] task_id {} ended'.format(str(task_id)))
+        gc.collect()
+        return "", 204
     except Exception as ex:
         print(f"Error Generate during PubSub, ${str(ex)}")
         return f"Bad Request: {ex}", 400
 
-    gc.collect()
-    return 'ok', 200
 
 
 if __name__ == '__main__':
